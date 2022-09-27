@@ -1,0 +1,38 @@
+<Concert Id="1">
+    <Date>Mon Oct 10 00:00:00 ART 2022</Date>
+    <StarTime>09:00</StarTime>
+    <HallId>1</HallId>
+        <HallName>Royal Albert Hall</HallName>
+        <HallAddress>Penelope St. 145</HallAddress>
+        <HallCapacity>10000</HallCapacity>
+            <HallCountryId>4</HallCountryId>
+            <HallCountryName>England</HallCountryName>
+        <HallCapacity>10000</HallCapacity>
+        <Artists>
+            <Artist Id="1">
+                <Name>Dua Lipa</Name>
+                    <CountryId>2</CountryId>
+                    <CountryName>USA</CountryName>
+            </Artist><Artist Id="2">
+                <Name>Rosalia</Name>
+                    <CountryId>3</CountryId>
+                    <CountryName>Mexico</CountryName>
+            </Artist>
+        </Artists>
+    <Staffs>
+        <Staff Id="1">
+            <Name>Nahuel</Name>
+            <LastName>Perez</LastName>
+            <Document_no>22222222</Document_no>
+            <StaffRoleId>1</StaffRoleId>
+            <StaffRoleDescription>receptionist</StaffRoleDescription>
+        </Staff>
+        <Staff Id="2">
+            <Name>Damian</Name>
+            <LastName>Salut</LastName>
+            <Document_no>44444444</Document_no>
+            <StaffRoleId>2</StaffRoleId>
+            <StaffRoleDescription>light manager</StaffRoleDescription>
+        </Staff>
+    </Staffs>
+</Concert>

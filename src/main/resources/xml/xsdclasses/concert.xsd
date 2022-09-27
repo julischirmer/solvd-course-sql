@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="Concert">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="concertId" type="xs:int"/>
+            <xs:element name="dateConcert" type="xs:date"/>
+            <xs:element name="timeConcert" type="xs:time"/>            
+            <xs:element name="hall">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="hallId" type="xs:int"/>
+                        <xs:element name="hallName" type="xs:string"/>
+                        <xs:element name="hallAddress" type="xs:string"/>
+                        <xs:element name="capacity" type="xs:int"/>
+                        <xs:element name="country">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="countryId" type="xs:int"/>
+                                    <xs:element name="countryName" type="xs:string"/>                                    
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="artists">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="artist" minOccurs="0" maxOccurs="30">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="artistId" type="xs:int"/>
+                                    <xs:element name="artistName" type="xs:string"/>
+                                    <xs:element name="country">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="countryId" type="xs:int"/>
+                                                <xs:element name="countryName" type="xs:string"/>                                    
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>                                    
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="staffs">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="staff" minOccurs="0" maxOccurs="200">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="staffId" type="xs:int"/>
+                                    <xs:element name="staffdocumentNo" type="xs:int"/>
+                                    <xs:element name="staffName" type="xs:string"/>
+                                    <xs:element name="staffLastName" type="xs:string"/>
+                                    <xs:element name="roleStaff">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="roleId" type="xs:int"/>
+                                                <xs:element name="roledesc" type="xs:string"/>                                    
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>                                    
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>   
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+</xs:schema>

@@ -55,4 +55,16 @@ public class BandMember {
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
+
+    @Override
+    public String toString() {
+        return "BandMember{" +
+                "id=" + id +
+                ", documentNo=" + documentNo +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", instrument=" + instrument +
+                ", artist=" + artist +
+                '}';
+    }
 }
