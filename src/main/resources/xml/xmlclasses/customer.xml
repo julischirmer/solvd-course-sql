@@ -1,0 +1,57 @@
+<?parsers version="1.0" encoding="utf-8"?>
+<Customers>
+    <Customer>
+        <customer_id>1</customer_id>
+        <document_no>10000001</document_no>
+        <name>Julian</name>
+        <last_name>Schirmer</last_name>
+        <address>Lopez st. 1214</address>
+        <birthday>1999-10-27</birthday>
+        <email>jschirmer@mail.com</email>
+    </Customer>
+    <Customer>
+        <customer_id>2</customer_id>
+        <document_no>10000002</document_no>
+        <name>Anna</name>
+        <last_name>Iverson</last_name>
+        <address>Made st. 1023</address>
+        <birthday>1976-09-16</birthday>
+        <email>aiverson@mail.com</email>
+    </Customer>
+    <Customer>
+        <customer_id>3</customer_id>
+        <document_no>50000001</document_no>
+        <name>Dana</name>
+        <last_name>Klept</last_name>
+        <address>Stwart av. 455</address>
+        <birthday>1986-01-10</birthday>
+        <email>dklept@mail.com</email>
+    </Customer>
+    <Customer>
+        <customer_id>4</customer_id>
+        <document_no>50000002</document_no>
+        <name>Erin</name>
+        <last_name>Mooney</last_name>
+        <address>Rick st. 657</address>
+        <birthday>2001-03-21</birthday>
+        <email>emooney@mail.com</email>
+    </Customer>
+    <Customer>
+        <customer_id>5</customer_id>
+        <document_no>10000003</document_no>
+        <name>John</name>
+        <last_name>Landry</last_name>
+        <address>Split av. 435</address>
+        <birthday>1966-05-22</birthday>
+        <email>jlandry@mail.com</email>
+    </Customer>
+    <Customer>
+        <customer_id>6</customer_id>
+        <document_no>10000004</document_no>
+        <name>Pam</name>
+        <last_name>Spacey</last_name>
+        <address>Speed st. 902</address>
+        <birthday>1964-11-27</birthday>
+        <email>pspacey@mail.com</email>
+    </Customer>
+</Customers>

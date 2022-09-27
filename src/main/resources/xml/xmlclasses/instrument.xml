@@ -1,0 +1,23 @@
+<?parsers version="1.0" encoding="utf-8"?>
+<Instruments>
+    <Instrument>
+        <instrument_id>1</instrument_id>
+        <name>electric guitar</name>
+    </Instrument>
+    <Instrument>
+        <instrument_id>2</instrument_id>
+        <name>piano</name>
+    </Instrument>
+    <Instrument>
+        <instrument_id>3</instrument_id>
+        <name>electric bass</name>
+    </Instrument>
+    <Instrument>
+        <instrument_id>4</instrument_id>
+        <name>drums</name>
+    </Instrument>
+    <Instrument>
+        <instrument_id>5</instrument_id>
+        <name>fiddle</name>
+    </Instrument>
+</Instruments>

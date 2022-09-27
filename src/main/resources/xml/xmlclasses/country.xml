@@ -1,0 +1,19 @@
+<?parsers version="1.0" encoding="utf-8"?>
+<Countries>
+    <Country>
+        <country_id>1</country_id>
+        <country_name>Argentina</country_name>
+    </Country>
+    <Country>
+        <country_id>2</country_id>
+        <country_name>USA</country_name>
+    </Country>
+    <Country>
+        <country_id>3</country_id>
+        <country_name>Mexico</country_name>
+    </Country>
+    <Country>
+        <country_id>4</country_id>
+        <country_name>England</country_name>
+    </Country>
+</Countries>

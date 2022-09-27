@@ -1,0 +1,59 @@
+<?parsers version="1.0" encoding="utf-8"?>
+<Artists>
+	<Artist>
+		<artist_id>1</artist_id>
+		<name>Dua Lipa</name>
+		<country>
+			<country_id>2</country_id>
+			<country_name>USA</country_name>
+		</country>		
+	</Artist>
+	<Artist>
+		<artist_id>2</artist_id>
+		<name>Rosalia</name>
+		<country>
+			<country_id>3</country_id>
+			<country_name>Mexico</country_name>
+		</country>
+	</Artist>
+	<Artist>
+		<artist_id>3</artist_id>
+		<name>Sia</name>
+		<country>
+			<country_id>2</country_id>
+			<country_name>USA</country_name>
+		</country>
+	</Artist>
+	<Artist>
+		<artist_id>4</artist_id>
+		<name>Miley Cyrus</name>
+		<country>
+			<country_id>2</country_id>
+			<country_name>USA</country_name>
+		</country>
+	</Artist>
+	<Artist>
+		<artist_id>5</artist_id>
+		<name>Bizarrap</name>
+		<country>
+			<country_id>1</country_id>
+			<country_name>Argentina</country_name>
+		</country>
+	</Artist>
+	<Artist>
+		<artist_id>6</artist_id>
+		<name>Adele</name>
+		<country>
+			<country_id>4</country_id>
+			<country_name>England</country_name>
+		</country>
+	</Artist>
+	<Artist>
+		<artist_id>7</artist_id>
+		<name>Nicki Nicole</name>
+		<country>
+			<country_id>1</country_id>
+			<country_name   >Argentina</country_name>
+		</country>
+	</Artist>
+</Artists>
