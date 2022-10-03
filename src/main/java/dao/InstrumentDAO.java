@@ -1,33 +1,136 @@
 package dao;
 
+import models.Country;
 import models.Instrument;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstrumentDAO implements IDAO<Instrument> {
+    private final String INSERT_INSTRUMENT = "INSERT INTO instrument(instrument_name) VALUES(?)";
+    private final String GET_INSTRUMENT_BY_ID = "SELECT * FROM instrument WHERE id = ?";
+    private final String GET_ALL_INSTRUMENT = "SELECT * FROM instrument";
+    private final String DELETE_BY_ID = "DELETE FROM instrument WHERE id = ?";
+    private final String UPDATE_INSTRUMENT = "UPDATE instrument SET instrument_name = ? WHERE id = ?";
+
+    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
+    private final Logger logger = LogManager.getLogger(InstrumentDAO.class);
+
+    public InstrumentDAO() throws SQLException {
+    }
+
     @Override
     public void insert(Instrument object) throws SQLException {
-
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(INSERT_INSTRUMENT);
+            preparedStatement.setString(1, object.getName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
     }
 
     @Override
-    public void delete(Instrument object) throws SQLException {
+    public void update(int id, Instrument object) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_INSTRUMENT);
 
+            preparedStatement.setString(1, object.getName());
+            preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
     }
 
     @Override
-    public void update(Instrument object) throws SQLException {
+    public List<Instrument> getAll() throws SQLException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(GET_ALL_INSTRUMENT);
+            ResultSet result = preparedStatement.executeQuery();
 
-    }
+            ArrayList<Instrument> instruments = new ArrayList<>();
 
-    @Override
-    public List<Instrument> getAll(Instrument object) throws SQLException {
-        return null;
+            while (result.next()) {
+                Instrument instrument = new Instrument(result.getInt("id"), result.getString("instrument_name"));
+
+                instruments.add(instrument);
+            }
+
+            return instruments;
+        } catch (SQLException e) {
+            logger.error(e);
+            return null;
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
     }
 
     @Override
     public Instrument getById(int id) throws SQLException {
-        return null;
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(GET_INSTRUMENT_BY_ID);
+            preparedStatement.setInt(1, id);
+
+            ResultSet result = preparedStatement.executeQuery();
+
+            result.next();
+            Instrument instrument = new Instrument();
+            instrument.setId(result.getInt("id"));
+            instrument.setName(result.getString("instrument_name"));
+
+            return instrument;
+        } catch (SQLException e) {
+            logger.error(e);
+            return null;
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
+    }
+
+    @Override
+    public void deleteById(int id) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
     }
 }

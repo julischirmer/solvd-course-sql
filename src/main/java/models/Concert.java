@@ -1,17 +1,56 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+import jdk.jshell.execution.LocalExecutionControl;
+
+import javax.xml.bind.annotation.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@XmlRootElement(name = "Concert")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("Concert")
 public class Concert {
+    @XmlElement(name = "id")
     private int id;
-    private Date dateConcert;
-    private LocalTime startTime;
+    @XmlElement(name = "dateConcert")
+    private String dateConcert;
+    @XmlElement(name = "startTime")
+    private String startTime;
+    @XmlElement(name = "hall")
     private Hall hall;
+    @XmlTransient
     private List<Artist> artists;
+    @XmlTransient
     private List<Staff> staffs;
+    public Concert(){
 
+    }
+
+    public Concert(int id, String dateConcert, String startTime, Hall hall, ArrayList<Artist> artists, ArrayList<Staff> staffs){
+        this.id = id;
+        this.dateConcert = dateConcert;
+        this.startTime = startTime;
+        this.hall = hall;
+        this.artists = artists;
+        this.staffs = staffs;
+    }
+
+    public Concert(String dateConcert, String startTime, Hall hall, ArrayList<Artist> artists, ArrayList<Staff> staffs){
+        this.dateConcert = dateConcert;
+        this.startTime = startTime;
+        this.hall = hall;
+        this.artists = artists;
+        this.staffs = staffs;
+    }
+
+    public Concert(int id, String dateConcert, String startTime, Hall hall){
+        this.id = id;
+        this.dateConcert = dateConcert;
+        this.startTime = startTime;
+        this.hall = hall;
+    }
     public int getId() {
         return id;
     }
@@ -20,19 +59,19 @@ public class Concert {
         this.id = id;
     }
 
-    public Date getDateConcert() {
+    public String getDateConcert() {
         return dateConcert;
     }
 
-    public void setDateConcert(Date dateConcert) {
+    public void setDateConcert(String dateConcert) {
         this.dateConcert = dateConcert;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
@@ -58,5 +97,17 @@ public class Concert {
 
     public void setStaffs(List<Staff> staffs) {
         this.staffs = staffs;
+    }
+
+    @Override
+    public String toString() {
+        return "Concert{" +
+                "id=" + id +
+                ", dateConcert=" + dateConcert +
+                ", startTime=" + startTime +
+                ", hall=" + hall +
+                ", artists=" + artists +
+                ", staffs=" + staffs +
+                '}';
     }
 }

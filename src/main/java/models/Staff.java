@@ -1,11 +1,51 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Staff")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("Staff")
 public class Staff {
+    @XmlElement(name = "id")
     private int id;
-    private int document_no;
+    @XmlElement(name = "documentNo")
+    private int documentNo;
+    @XmlElement(name = "name")
     private String name;
+    @XmlElement(name = "lastName")
     private String lastName;
+    @XmlElement(name = "roleStaff")
     private RoleStaff roleStaff;
+
+    public Staff(){
+
+    }
+    public Staff(int id,int documentNo,String name, String lastName, RoleStaff roleStaff){
+        this.id = id;
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;
+        this.roleStaff = roleStaff;
+    }
+
+    public Staff(int documentNo,String name, String lastName, RoleStaff roleStaff){
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;
+        this.roleStaff = roleStaff;
+    }
+
+    public Staff(int id, int documentNo,String name, String lastName){
+        this.id = id;
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;;
+    }
 
     public int getId() {
         return id;
@@ -15,12 +55,12 @@ public class Staff {
         this.id = id;
     }
 
-    public int getDocument_no() {
-        return document_no;
+    public int getDocumentNo() {
+        return documentNo;
     }
 
-    public void setDocument_no(int document_no) {
-        this.document_no = document_no;
+    public void setDocumentNo(int documentNo) {
+        this.documentNo = documentNo;
     }
 
     public String getName() {
@@ -45,5 +85,16 @@ public class Staff {
 
     public void setRoleStaff(RoleStaff roleStaff) {
         this.roleStaff = roleStaff;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", documentNo=" + documentNo +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", roleStaff=" + roleStaff +
+                '}';
     }
 }

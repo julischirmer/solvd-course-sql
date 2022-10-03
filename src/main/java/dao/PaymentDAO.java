@@ -1,7 +1,7 @@
 package dao;
 
-import models.Artist;
 import models.Country;
+import models.Payment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,52 +9,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistDAO implements IDAO<Artist> {
-    private final String INSERT_ARTIST = "INSERT INTO artist(name, country_id) VALUES(?,?)";
-    private final String GET_ARTIST_BY_ID = "SELECT a.*, c.country_name FROM artist a INNER JOIN country c ON a.country_id = c.id WHERE a.id = ?";
-    private final String GET_ALL_ARTIST = "SELECT a.*, c.country_name FROM artist a INNER JOIN country c ON a.country_id = c.id ORDER BY a.id";
-    private final String DELETE_BY_ID = "DELETE FROM artist WHERE id = ?";
-    private final String UPDATE_ARTIST = "UPDATE artist SET name =  ?, country_id = ? WHERE id = ?";
-    // private final String DELETE_ALL = "DELETE FROM artist";
-
+public class PaymentDAO implements IDAO<Payment>{
+    private final String INSERT_PAYMENT = "INSERT INTO payment(type_pay) VALUES(?)";
+    private final String GET_PAYMENT_BY_ID = "SELECT * FROM payment WHERE id = ?";
+    private final String GET_ALL_PAYMENT = "SELECT * FROM payment";
+    private final String DELETE_BY_ID = "DELETE FROM payment WHERE id = ?";
+    private final String UPDATE_PAYMENT = "UPDATE payment SET type_pay =  ? WHERE id = ?";
 
     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
-    private final Logger logger = LogManager.getLogger(ArtistDAO.class);
+    private final Logger logger = LogManager.getLogger(PaymentDAO.class);
 
-    public ArtistDAO() throws SQLException {
+    public PaymentDAO() throws SQLException {
     }
 
     @Override
-    public void insert(Artist object) throws SQLException {
+    public void insert(Payment object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_ARTIST);
-            preparedStatement.setString(1, object.getName());
-            preparedStatement.setInt(2, object.getCountry().getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            logger.error(e);
-        } finally {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                logger.error(e);
-            }
-        }
-    }
-
-
-
-    @Override
-    public void update(int id, Artist object) throws SQLException {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(UPDATE_ARTIST);
-
-            preparedStatement.setString(1, object.getName());
-            preparedStatement.setInt(2, object.getCountry().getId());
-            preparedStatement.setInt(3, id);
-
+            preparedStatement = connection.prepareStatement(INSERT_PAYMENT);
+            preparedStatement.setString(1, object.getTypePay());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
@@ -68,23 +41,42 @@ public class ArtistDAO implements IDAO<Artist> {
     }
 
     @Override
-    public ArrayList<Artist> getAll() throws SQLException {
+    public void update(int id, Payment object) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_ARTIST);
+            preparedStatement = connection.prepareStatement(UPDATE_PAYMENT);
+
+            preparedStatement.setString(1, object.getTypePay());
+            preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(e);
+            }
+        }
+    }
+
+    @Override
+    public List<Payment> getAll() throws SQLException {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(GET_ALL_PAYMENT);
             ResultSet result = preparedStatement.executeQuery();
 
-            ArrayList<Artist> artists = new ArrayList<>();
+            ArrayList<Payment> payments = new ArrayList<>();
 
             while (result.next()) {
+                Payment payment = new Payment(result.getInt("id"), result.getString("type_pay"));
 
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-                Artist artist = new Artist(result.getInt("id"), result.getString("name"), country);
-
-                artists.add(artist);
+                payments.add(payment);
             }
 
-            return artists;
+            return payments;
         } catch (SQLException e) {
             logger.error(e);
             return null;
@@ -95,23 +87,23 @@ public class ArtistDAO implements IDAO<Artist> {
                 logger.error(e);
             }
         }
-
     }
 
     @Override
-    public Artist getById(int id) throws SQLException {
+    public Payment getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(GET_ARTIST_BY_ID);
+            preparedStatement = connection.prepareStatement(GET_PAYMENT_BY_ID);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
-            Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-            Artist artist = new Artist(result.getInt("id"), result.getString("name"), country);
+            Payment payment = new Payment();
+            payment.setId(result.getInt("id"));
+            payment.setTypePay(result.getString("type_pay"));
 
-            return artist;
+            return payment;
         } catch (SQLException e) {
             logger.error(e);
             return null;
@@ -127,9 +119,7 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
-
         try {
-
             preparedStatement = connection.prepareStatement(DELETE_BY_ID);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -143,7 +133,4 @@ public class ArtistDAO implements IDAO<Artist> {
             }
         }
     }
-
-
 }
-

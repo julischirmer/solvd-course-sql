@@ -1,260 +1,266 @@
-package xmlparsing;
+package xmlparsing;// Java Code to implement StAX parser
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import models.*;
-import javax.xml.namespace.QName;
-import javax.xml.stream.*;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.Reader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.*;
 
-//Source: https://www.w3schools.blog/java-stax-xmlstreamreader-example
+public class StAX
+{
+    public static final Logger logger = LogManager.getLogger(StAX.class.getName());
+    private static boolean bcountryid, bcountryname;
+    private static boolean bhallid, baddress, bcapacity, bname;
 
-public class StAX {
+    public static void main(String[] args) throws FileNotFoundException, XMLStreamException
+    {
+        // Create a File object with appropriate xml file name
+        File countryFile = new File("src/main/resources/xml/xmlclasses/country.xml");
+        File hallFile = new File("src/main/resources/xml/xmlclasses/hall.xml");
 
-    public static void main(String[] args) {
-        String concertPath= "src/main/resources/xml/xmlclasses/concert.xml";
-        writeXML(concertPath);
+        // Function for accessing the data
+        logger.info("--- Parse COUNTRY XML file ---");
+        parserCountries(countryFile);
 
-        try {
-            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-            XMLStreamWriter outputWriter = outputFactory.createXMLStreamWriter(new FileOutputStream(concertPath));
-
-            Concert concert1 = new Concert();
-
-            Country usa = new Country();
-            usa.setId(2);
-            usa.setDescription("USA");
-
-            Artist artist1 = new Artist();
-            artist1.setId(1);
-            artist1.setName("Dua Lipa");
-            artist1.setCountry(usa);
-
-            Country mexico = new Country();
-            mexico.setId(3);
-            mexico.setDescription("Mexico");
-
-            Artist artist2 = new Artist();
-            artist2.setId(2);
-            artist2.setName("Rosalia");
-            artist2.setCountry(mexico);
-
-
-            List<Artist> artistList = new ArrayList<>();
-            artistList.add(artist1);
-            artistList.add(artist2);
-
-            RoleStaff roleStaff1 = new RoleStaff();
-            roleStaff1.setId(1);
-            roleStaff1.setDescription("receptionist");
-
-            Staff staff1 = new Staff();
-            staff1.setId(1);
-            staff1.setDocument_no(22222222);
-            staff1.setName("Nahuel");
-            staff1.setLastName("Perez");
-            staff1.setRoleStaff(roleStaff1);
-
-            RoleStaff roleStaff2 = new RoleStaff();
-            roleStaff2.setId(2);
-            roleStaff2.setDescription("light manager");
-
-            Staff staff2 = new Staff();
-            staff2.setId(2);
-            staff2.setDocument_no(44444444);
-            staff2.setName("Damian");
-            staff2.setLastName("Salut");
-            staff2.setRoleStaff(roleStaff2);
-
-            List<Staff> staffList = new ArrayList<>();
-            staffList.add(staff1);
-            staffList.add(staff2);
-
-            Country england = new Country();
-            england.setId(4);
-            england.setDescription("England");
-
-            Hall hall1 = new Hall();
-            hall1.setId(1);
-            hall1.setName("Royal Albert Hall");
-            hall1.setAddress("Penelope St. 145");
-            hall1.setCapacity(10000);
-            hall1.setCountry(england);
-
-
-            concert1.setId(1);
-            concert1.setDateConcert(new SimpleDateFormat("yyyy-MM-dd").parse("2022-10-10"));
-            concert1.setStartTime(LocalTime.parse("09:00:00", DateTimeFormatter.ofPattern("HH:mm:ss")));
-            concert1.setHall(hall1);
-            concert1.setArtists(artistList);
-            concert1.setStaffs(staffList);
-
-            pojoToXML(concert1, outputWriter);
-            outputWriter.flush();
-            outputWriter.close();
-
-            readXML(concertPath);
-        } catch (XMLStreamException | FileNotFoundException | ParseException e) {
-            e.printStackTrace();
-        }
+        logger.info("--- Parse HALL XML file ---");
+        parserHalls(hallFile);
     }
 
-    public static void readXML(String path) {
-        try {
-            Reader reader = new FileReader(path);
-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-            XMLStreamReader xmlReader = inputFactory.createXMLStreamReader(reader);
+    public static void parserCountries(File file) throws FileNotFoundException, XMLStreamException
+    {
+        // Variables to make sure whether a element
+        // in the xml is being accessed or not
+        // if false that means elements is
+        // not been used currently , if true the element or the
+        // tag is being used currently
 
-            while (xmlReader.hasNext()) {
-                int event = xmlReader.next();
+        bcountryid = bname = false;
+        // Instance of the class which helps on reading tags
+        XMLInputFactory factory = XMLInputFactory.newInstance();
 
-                if (event == XMLStreamConstants.START_ELEMENT) {
-                    System.out.println("Start element:" + xmlReader.getLocalName());
-                    int attributes = xmlReader.getAttributeCount();
-                    for (int i = 0; i < attributes; i++) {
-                        QName name = xmlReader.getAttributeName(i);
-                        String value = xmlReader.getAttributeValue(i);
-                        System.out.println("Attribute name :" + name);
-                        System.out.println("Attribute value :" + value);
-                    }
+        // Initializing the handler to access the tags in the XML file
+        XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(file));
+
+        // Checking the availability of the next tag
+        while (eventReader.hasNext())
+        {
+            // Event is actually the tag . It is of 3 types
+            // <name> = StartEvent
+            // </name> = EndEvent
+            // data between the StartEvent and the EndEvent
+            // which is Characters Event
+            XMLEvent event = eventReader.nextEvent();
+
+            // This will trigger when the tag is of type <...>
+            if (event.isStartElement())
+            {
+                StartElement element = (StartElement)event;
+
+                // Iterator for accessing the metadata related
+                // the tag started.
+                // Here, it would name of the company
+                Iterator<Attribute> iterator = element.getAttributes();
+                while (iterator.hasNext())
+                {
+                    Attribute attribute = iterator.next();
+                    QName name = attribute.getName();
+                    String value = attribute.getValue();
+                    logger.info(name+" = " + value);
                 }
-                if (event == XMLStreamConstants.END_ELEMENT) {
-                    System.out.println("End element: " + xmlReader.getLocalName());
-                }
 
+                // Checking which tag needs to be opened for reading.
+                // If the tag matches then the boolean of that tag
+                // is set to be true.
+                if (element.getName().toString().equalsIgnoreCase("country_id"))
+                {
+                    bcountryid = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("name"))
+                {
+                    bname = true;
+                }
             }
-        } catch (FileNotFoundException | XMLStreamException e) {
-            System.out.println(e);
+
+            // This will be triggered when the tag is of type </...>
+            if (event.isEndElement())
+            {
+                EndElement element = (EndElement) event;
+
+                // Checking which tag needs to be closed after reading.
+                // If the tag matches then the boolean of that tag is
+                // set to be false.
+                if (element.getName().toString().equalsIgnoreCase("country_id"))
+                {
+                    bcountryid = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("name"))
+                {
+                    bname = false;
+                }
+            }
+
+            // Triggered when there is data after the tag which is
+            // currently opened.
+            if (event.isCharacters())
+            {
+                // Depending upon the tag opened the data is retrieved .
+                Characters element = (Characters) event;
+                if (bcountryid)
+                {
+                    logger.info("Country id: " + element.getData());
+                }
+                if (bname)
+                {
+                    logger.info("Country name: " + element.getData());
+                }
+            }
         }
     }
 
-    public synchronized static void writeXML(String path) {
-        try {
-            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-            XMLStreamWriter outputWriter = outputFactory.createXMLStreamWriter(new FileOutputStream(path));
-            outputWriter.writeStartDocument("UTF-8", "1.0");
-            // Create concert
-            outputWriter.writeStartElement("Concert");
-            outputWriter.writeEndElement();
-            outputWriter.flush();
-            outputWriter.close();
-        } catch (Exception e) {
-            System.out.println(e);
+    public static void parserHalls(File file) throws FileNotFoundException, XMLStreamException
+    {
+        // Variables to make sure whether a element
+        // in the xml is being accessed or not
+        // if false that means elements is
+        // not been used currently , if true the element or the
+        // tag is being used currently
+
+        bcountryid = bname = bcountryname = false;
+        bhallid = baddress = bcapacity = false;
+
+        // Instance of the class which helps on reading tags
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+
+        // Initializing the handler to access the tags in the XML file
+        XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(file));
+
+        // Checking the availability of the next tag
+        while (eventReader.hasNext())
+        {
+            // Event is actually the tag . It is of 3 types
+            // <name> = StartEvent
+            // </name> = EndEvent
+            // data between the StartEvent and the EndEvent
+            // which is Characters Event
+            XMLEvent event = eventReader.nextEvent();
+
+            // This will trigger when the tag is of type <...>
+            if (event.isStartElement())
+            {
+                StartElement element = (StartElement)event;
+
+                // Iterator for accessing the metadata related
+                // the tag started.
+                // Here, it would name of the company
+                Iterator<Attribute> iterator = element.getAttributes();
+                while (iterator.hasNext())
+                {
+                    Attribute attribute = iterator.next();
+                    QName name = attribute.getName();
+                    String value = attribute.getValue();
+                    logger.info(name+" = " + value);
+                }
+
+                // Checking which tag needs to be opened for reading.
+                // If the tag matches then the boolean of that tag
+                // is set to be true.
+                if (element.getName().toString().equalsIgnoreCase("hall_id"))
+                {
+                    bhallid = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("name"))
+                {
+                    bname = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("address"))
+                {
+                    baddress = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("country_id"))
+                {
+                    bcountryid = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("country_name"))
+                {
+                    bcountryname = true;
+                }
+                if (element.getName().toString().equalsIgnoreCase("capacity"))
+                {
+                    bcapacity = true;
+                }
+            }
+
+            // This will be triggered when the tag is of type </...>
+            if (event.isEndElement())
+            {
+                EndElement element = (EndElement) event;
+
+                // Checking which tag needs to be closed after reading.
+                // If the tag matches then the boolean of that tag is
+                // set to be false.
+                if (element.getName().toString().equalsIgnoreCase("hall_id"))
+                {
+                    bhallid = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("name"))
+                {
+                    bname = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("address"))
+                {
+                    baddress = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("country_id"))
+                {
+                    bcountryid = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("country_name"))
+                {
+                    bcountryname = false;
+                }
+                if (element.getName().toString().equalsIgnoreCase("capacity"))
+                {
+                    bcapacity = false;
+                }
+            }
+
+            // Triggered when there is data after the tag which is
+            // currently opened.
+            if (event.isCharacters())
+            {
+                // Depending upon the tag opened the data is retrieved .
+                Characters element = (Characters) event;
+                if (bhallid)
+                {
+                    logger.info("Hall id: " + element.getData());
+                }
+                if (bname)
+                {
+                    logger.info("Hall name: "+ element.getData());
+                }
+                if (baddress)
+                {
+                    logger.info("Hall address:" + element.getData());
+                }
+                if (bcountryid)
+                {
+                    logger.info("Country id: " + element.getData());
+                }
+                if (bcountryname)
+                {
+                    logger.info("Country name: " + element.getData());
+                }
+                if (bcapacity)
+                {
+                    logger.info("Capacity: " + element.getData());
+                }
+            }
         }
     }
-
-    public synchronized static void pojoToXML(Concert concert, XMLStreamWriter outputWriter) throws FileNotFoundException, XMLStreamException {
-        outputWriter.writeStartElement("Concert");
-        outputWriter.writeAttribute("Id", String.valueOf(concert.getId()));
-
-        // pojoToXML(concert.getArtists(), outputWriter);
-
-        // pojoToXML(worker.getSeniority(), outputWriter);
-
-        outputWriter.writeStartElement("Date");
-        outputWriter.writeCharacters(concert.getDateConcert().toString());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("StarTime");
-        outputWriter.writeCharacters(concert.getStartTime().toString());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallId");
-        outputWriter.writeCharacters(String.valueOf(concert.getHall().getId()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallName");
-        outputWriter.writeCharacters(concert.getHall().getName());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallAddress");
-        outputWriter.writeCharacters(concert.getHall().getAddress());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallCapacity");
-        outputWriter.writeCharacters(String.valueOf(concert.getHall().getCapacity()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallCountryId");
-        outputWriter.writeCharacters(String.valueOf(concert.getHall().getCountry().getId()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallCountryName");
-        outputWriter.writeCharacters(String.valueOf(concert.getHall().getCountry().getDescription()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("HallCapacity");
-        outputWriter.writeCharacters(String.valueOf(concert.getHall().getCapacity()));
-        outputWriter.writeEndElement();
-
-
-
-        outputWriter.writeStartElement("Artists");
-        for (Artist artist : concert.getArtists()) {
-            pojoToXML(artist, outputWriter);
-        }
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("Staffs");
-        for (Staff staff : concert.getStaffs()) {
-            pojoToXML(staff, outputWriter);
-        }
-        outputWriter.writeEndElement();
-        outputWriter.writeEndElement();
-    }
-
-    public synchronized static void pojoToXML(Artist artist, XMLStreamWriter outputWriter) throws FileNotFoundException, XMLStreamException {
-        outputWriter.writeStartElement("Artist");
-        outputWriter.writeAttribute("Id", String.valueOf(artist.getId()));
-
-        outputWriter.writeStartElement("Name");
-        outputWriter.writeCharacters(artist.getName());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("CountryId");
-        outputWriter.writeCharacters(String.valueOf(artist.getCountry().getId()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("CountryName");
-        outputWriter.writeCharacters(String.valueOf(artist.getCountry().getDescription()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeEndElement();
-    }
-
-    public synchronized static void pojoToXML(Staff staff, XMLStreamWriter outputWriter) throws FileNotFoundException, XMLStreamException {
-        outputWriter.writeStartElement("Staff");
-        outputWriter.writeAttribute("Id", String.valueOf(staff.getId()));
-
-        outputWriter.writeStartElement("Name");
-        outputWriter.writeCharacters(staff.getName());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("LastName");
-        outputWriter.writeCharacters(staff.getLastName());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("Document_no");
-        outputWriter.writeCharacters(String.valueOf(staff.getDocument_no()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("StaffRoleId");
-        outputWriter.writeCharacters(String.valueOf(staff.getRoleStaff().getId()));
-        outputWriter.writeEndElement();
-
-        outputWriter.writeStartElement("StaffRoleDescription");
-        outputWriter.writeCharacters(staff.getRoleStaff().getDescription());
-        outputWriter.writeEndElement();
-
-        outputWriter.writeEndElement();
-    }
-
-
 }

@@ -1,12 +1,43 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
+@XmlRootElement(name = "Booking")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("Booking")
 public class Booking {
+    @XmlElement(name = "id")
     private int id;
-    private Date dateBook;
+    @XmlElement(name = "dateBook")
+    private String dateBook;
+    @XmlElement(name = "customer")
     private Customer customer;
+    @XmlElement(name = "payment")
     private Payment payment;
+
+    public Booking(){
+
+    }
+
+    public Booking(int id, String dateBook, Customer customer, Payment payment){
+        this.id = id;
+        this.dateBook = dateBook;
+        this.customer = customer;
+        this.payment = payment;
+    }
+
+    public Booking(String dateBook, Customer customer, Payment payment){
+        this.dateBook = dateBook;
+        this.customer = customer;
+        this.payment = payment;
+
+    }
 
     public int getId() {
         return id;
@@ -16,11 +47,11 @@ public class Booking {
         this.id = id;
     }
 
-    public Date getDateBook() {
+    public String getDateBook() {
         return dateBook;
     }
 
-    public void setDateBook(Date dateBook) {
+    public void setDateBook(String dateBook) {
         this.dateBook = dateBook;
     }
 
@@ -38,5 +69,15 @@ public class Booking {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", dateBook='" + dateBook + '\'' +
+                ", customer=" + customer +
+                ", payment=" + payment +
+                '}';
     }
 }

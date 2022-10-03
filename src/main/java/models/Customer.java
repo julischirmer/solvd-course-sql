@@ -1,29 +1,74 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
+@XmlRootElement(name = "Customer")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("Customer")
 public class Customer {
-    private long id;
-    private long documentNo;
+    @XmlElement(name = "id")
+    private int id;
+    @XmlElement(name = "documentNo")
+    private int documentNo;
+    @XmlElement(name = "name")
     private String name;
+    @XmlElement(name = "lastName")
     private String lastName;
+    @XmlElement(name = "address")
     private String address;
-    private Date birthday;
+    @XmlElement(name = "birthday")
+    private String birthday;
+    @XmlElement(name = "email")
     private String email;
 
-    public long getId() {
+    public Customer(){
+
+    }
+    public Customer( int documentNo, String name, String lastName, String address, String birthday, String email){
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.birthday = birthday;
+        this.email = email;
+    }
+
+    public Customer(int id, int documentNo, String name, String lastName, String address, String birthday, String email){
+        this.id = id;
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.birthday = birthday;
+        this.email = email;
+    }
+
+    public Customer(int id, int documentNo, String name, String lastName){
+        this.id = id;
+        this.documentNo = documentNo;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getDocumentNo() {
+    public int getDocumentNo() {
         return documentNo;
     }
 
-    public void setDocumentNo(long documentNo) {
+    public void setDocumentNo(int documentNo) {
         this.documentNo = documentNo;
     }
 
@@ -51,11 +96,11 @@ public class Customer {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -65,5 +110,18 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", documentNo=" + documentNo +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
