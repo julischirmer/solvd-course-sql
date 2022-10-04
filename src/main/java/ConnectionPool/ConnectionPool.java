@@ -1,3 +1,5 @@
+package ConnectionPool;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConnectionPool {
-    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
+    private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private final String DRIVER;
     private final String URL;
@@ -43,8 +45,8 @@ public class ConnectionPool {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            LOGGER.error(e);
-            LOGGER.error("JDBC implementation not found");
+            logger.error(e);
+            logger.error("JDBC implementation not found");
         }
     }
 
@@ -61,15 +63,15 @@ public class ConnectionPool {
                 connectionPool.add(DriverManager.getConnection(URL, USER, PASS));
                 actualSize.incrementAndGet();
             } catch (SQLException e) {
-                LOGGER.error(e);
-                LOGGER.error("Something went wrong when getting a connection");
+                logger.error(e);
+                logger.error("Something went wrong when getting a connection");
             }
         }
         try {
             Connection connection = connectionPool.take();
             return connection;
         } catch (InterruptedException e) {
-            LOGGER.error("Thread interrupted");
+            logger.error("Thread interrupted");
             return null;
         }
     }

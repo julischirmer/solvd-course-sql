@@ -1,10 +1,12 @@
 package dao;
 
+import models.Concert;
 import models.Customer;
 import models.RoleStaff;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ConnectionPool.ConnectionPool;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,7 @@ public class CustomerDAO implements IDAO<Customer>{
     private final String GET_CUSTOMER_BY_ID = "SELECT * FROM customer WHERE id = ?";
     private final String GET_ALL_CUSTOMER = "SELECT * FROM customer";
     private final String DELETE_BY_ID = "DELETE FROM customer WHERE id = ?";
-    private final String UPDATE_CUSTOMER =
-            "UPDATE customer SET " +
-                    "document_no = ?, name = ?, last_name = ?, address = ?, birthday = ?, email = ?" +
-                    " WHERE id = ?";
-
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
+    private final String UPDATE_CUSTOMER = "UPDATE customer SET document_no = ?, name = ?, last_name = ?, address = ?, birthday = ?, email = ? WHERE id = ?";
     private final Logger logger = LogManager.getLogger(CustomerDAO.class);
 
     public CustomerDAO() throws SQLException {
@@ -29,8 +26,10 @@ public class CustomerDAO implements IDAO<Customer>{
     @Override
     public void insert(Customer object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_CUSTOMER);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_CUSTOMER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, object.getDocumentNo());
             preparedStatement.setString(2, object.getName());
             preparedStatement.setString(3, object.getLastName());
@@ -52,8 +51,10 @@ public class CustomerDAO implements IDAO<Customer>{
     @Override
     public void update(int id, Customer object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             preparedStatement.setInt(1, object.getDocumentNo());
             preparedStatement.setString(2, object.getName());
@@ -78,8 +79,10 @@ public class CustomerDAO implements IDAO<Customer>{
     @Override
     public List<Customer> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_CUSTOMER);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_CUSTOMER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Customer> customers = new ArrayList<>();
@@ -108,8 +111,11 @@ public class CustomerDAO implements IDAO<Customer>{
     @Override
     public Customer getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_CUSTOMER_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_CUSTOMER_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -140,8 +146,10 @@ public class CustomerDAO implements IDAO<Customer>{
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -1,10 +1,12 @@
 package dao;
 
+import models.Concert;
 import models.Country;
 import models.Instrument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ConnectionPool.ConnectionPool;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,6 @@ public class InstrumentDAO implements IDAO<Instrument> {
     private final String GET_ALL_INSTRUMENT = "SELECT * FROM instrument";
     private final String DELETE_BY_ID = "DELETE FROM instrument WHERE id = ?";
     private final String UPDATE_INSTRUMENT = "UPDATE instrument SET instrument_name = ? WHERE id = ?";
-
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(InstrumentDAO.class);
 
     public InstrumentDAO() throws SQLException {
@@ -25,8 +25,10 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public void insert(Instrument object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_INSTRUMENT);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_INSTRUMENT, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setString(1, object.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -43,8 +45,10 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public void update(int id, Instrument object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_INSTRUMENT);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_INSTRUMENT, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             preparedStatement.setString(1, object.getName());
             preparedStatement.setInt(2, id);
@@ -64,8 +68,10 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public List<Instrument> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_INSTRUMENT);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_INSTRUMENT, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Instrument> instruments = new ArrayList<>();
@@ -92,8 +98,10 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public Instrument getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection ;
         try {
-            preparedStatement = connection.prepareStatement(GET_INSTRUMENT_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_INSTRUMENT_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -119,8 +127,11 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

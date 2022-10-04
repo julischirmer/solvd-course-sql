@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Concert>
+    <id>1</id>
+    <dateConcert>2022-12-10</dateConcert>
+    <startTime>10:00:00</startTime>
+    <hall>
+        <id>4</id>
+        <name>River Plate Stadium</name>
+        <address>Av. Figueroa Alcorta 7597</address>
+        <capacity>72000</capacity>
+        <country>
+            <id>1</id>
+            <description>Argentina</description>
+        </country>
+    </hall>
+    <artists>
+        <artist>
+            <id>2</id>
+            <name>Rosalia</name>
+        </artist>
+        <artist>
+            <id>1</id>
+            <name>Dua Lipa</name>
+        </artist>
+        <artist>
+            <id>3</id>
+            <name>Sia</name>
+        </artist>
+        <artist>
+            <id>2</id>
+            <name>Rosalia</name>
+        </artist>
+        <artist>
+            <id>1</id>
+            <name>Dua Lipa</name>
+        </artist>
+        <artist>
+            <id>3</id>
+            <name>Sia</name>
+        </artist>
+    </artists>
+    <staffs>
+        <staff>
+            <id>1</id>
+            <documentNo>22222222</documentNo>
+            <name>Nahuel</name>
+            <lastName>Perez</lastName>
+        </staff>
+        <staff>
+            <id>1</id>
+            <documentNo>22222222</documentNo>
+            <name>Nahuel</name>
+            <lastName>Perez</lastName>
+        </staff>
+        <staff>
+            <id>1</id>
+            <documentNo>22222222</documentNo>
+            <name>Nahuel</name>
+            <lastName>Perez</lastName>
+        </staff>
+        <staff>
+            <id>2</id>
+            <documentNo>44444444</documentNo>
+            <name>Damian</name>
+            <lastName>Salut</lastName>
+        </staff>
+        <staff>
+            <id>2</id>
+            <documentNo>44444444</documentNo>
+            <name>Damian</name>
+            <lastName>Salut</lastName>
+        </staff>
+        <staff>
+            <id>2</id>
+            <documentNo>44444444</documentNo>
+            <name>Damian</name>
+            <lastName>Salut</lastName>
+        </staff>
+    </staffs>
+</Concert>

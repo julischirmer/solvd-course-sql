@@ -2,13 +2,11 @@ package models;
 
 import com.fasterxml.jackson.annotation.*;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "Artist")
 @XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(propOrder = { "id", "name", "Country" })
 @JsonRootName("Artist")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Artist {
@@ -18,7 +16,7 @@ public class Artist {
     @XmlElement(name = "name")
     @JsonProperty("name")
     private String name;
-    @XmlElement(name = "Country")
+    @XmlElement(name = "country")
     @JsonProperty("Country")
     private Country country;
 
@@ -36,8 +34,6 @@ public class Artist {
         this.name = name;
         this.country = country;
     }
-
-
 
 
     @JsonGetter("artistId")

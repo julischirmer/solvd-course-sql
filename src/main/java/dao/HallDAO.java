@@ -1,12 +1,10 @@
 package dao;
 
-import models.Country;
-import models.Hall;
-import models.RoleStaff;
-import models.Staff;
+import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ConnectionPool.ConnectionPool;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ public class HallDAO implements IDAO<Hall>{
     private final String DELETE_BY_ID = "DELETE FROM hall WHERE id = ?";
     private final String UPDATE_HALL = "UPDATE hall SET name = ?,address=? ,capacity =? ,country_id =? WHERE id = ?";
 
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(HallDAO.class);
 
     public HallDAO() throws SQLException {
@@ -27,8 +24,11 @@ public class HallDAO implements IDAO<Hall>{
     @Override
     public void insert(Hall object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_HALL);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_HALL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
             preparedStatement.setString(1, object.getName());
             preparedStatement.setString(2, object.getAddress());
             preparedStatement.setInt(3, object.getCapacity());
@@ -48,8 +48,10 @@ public class HallDAO implements IDAO<Hall>{
     @Override
     public void update(int id, Hall object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_HALL);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_HALL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             preparedStatement.setString(1, object.getName());
             preparedStatement.setString(2, object.getAddress());
@@ -72,8 +74,10 @@ public class HallDAO implements IDAO<Hall>{
     @Override
     public List<Hall> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_HALL);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_HALL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Hall> halls = new ArrayList<>();
@@ -102,8 +106,10 @@ public class HallDAO implements IDAO<Hall>{
     @Override
     public Hall getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_HALL_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_HALL_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -128,10 +134,10 @@ public class HallDAO implements IDAO<Hall>{
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
-
+        Connection connection;
         try {
-
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

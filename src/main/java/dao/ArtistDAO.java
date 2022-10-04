@@ -1,5 +1,6 @@
 package dao;
 
+import ConnectionPool.ConnectionPool;
 import models.Artist;
 import models.Country;
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ArtistDAO implements IDAO<Artist> {
     private final String INSERT_ARTIST = "INSERT INTO artist(name, country_id) VALUES(?,?)";
@@ -15,10 +15,7 @@ public class ArtistDAO implements IDAO<Artist> {
     private final String GET_ALL_ARTIST = "SELECT a.*, c.country_name FROM artist a INNER JOIN country c ON a.country_id = c.id ORDER BY a.id";
     private final String DELETE_BY_ID = "DELETE FROM artist WHERE id = ?";
     private final String UPDATE_ARTIST = "UPDATE artist SET name =  ?, country_id = ? WHERE id = ?";
-    // private final String DELETE_ALL = "DELETE FROM artist";
 
-
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(ArtistDAO.class);
 
     public ArtistDAO() throws SQLException {
@@ -27,8 +24,10 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public void insert(Artist object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_ARTIST);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_ARTIST, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setString(1, object.getName());
             preparedStatement.setInt(2, object.getCountry().getId());
             preparedStatement.executeUpdate();
@@ -48,9 +47,10 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public void update(int id, Artist object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_ARTIST);
-
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_ARTIST, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setString(1, object.getName());
             preparedStatement.setInt(2, object.getCountry().getId());
             preparedStatement.setInt(3, id);
@@ -70,8 +70,10 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public ArrayList<Artist> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_ARTIST);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_ARTIST, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Artist> artists = new ArrayList<>();
@@ -101,8 +103,10 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public Artist getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ARTIST_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ARTIST_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -127,10 +131,10 @@ public class ArtistDAO implements IDAO<Artist> {
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
-
+        Connection connection;
         try {
-
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

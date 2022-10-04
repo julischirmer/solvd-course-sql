@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Hall>
+    <id>1</id>
+    <name>Royal Albert Hall</name>
+    <address>Penelope St. 145</address>
+    <capacity>10000</capacity>
+    <country>
+        <id>4</id>
+        <description>England</description>
+    </country>
+</Hall>

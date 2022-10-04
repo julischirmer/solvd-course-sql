@@ -1,5 +1,6 @@
 package dao;
 
+import ConnectionPool.ConnectionPool;
 import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,6 @@ public class BandMemberDAO implements IDAO<BandMember>{
     private final String DELETE_BY_ID = "DELETE FROM hall WHERE id = ?";
     private final String UPDATE_BAND_MEMBER = "UPDATE hall SET document_no = ?,name =?,last_name=?,instrument_id=?,artist_id=? WHERE id = ?";
 
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(BandMemberDAO.class);
 
     public BandMemberDAO() throws SQLException {
@@ -24,8 +24,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
     @Override
     public void insert(BandMember object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_BAND_MEMBER);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_BAND_MEMBER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, object.getDocumentNo());
             preparedStatement.setString(2, object.getName());
             preparedStatement.setString(3, object.getLastName());
@@ -46,9 +48,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
     @Override
     public void update(int id, BandMember object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_BAND_MEMBER);
-
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_BAND_MEMBER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, object.getDocumentNo());
             preparedStatement.setString(2, object.getName());
             preparedStatement.setString(3, object.getLastName());
@@ -71,8 +74,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
     @Override
     public List<BandMember> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_BAND_MEMBER);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_BAND_MEMBER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<BandMember> bandMembers = new ArrayList<>();
@@ -103,10 +108,11 @@ public class BandMemberDAO implements IDAO<BandMember>{
     @Override
     public BandMember getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_BAND_MEMBER_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_BAND_MEMBER_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
-
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
@@ -131,10 +137,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
-
+        Connection connection;
         try {
-
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

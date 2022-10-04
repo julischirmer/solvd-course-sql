@@ -20,9 +20,11 @@ public class Concert {
     private String startTime;
     @XmlElement(name = "hall")
     private Hall hall;
-    @XmlTransient
+    @XmlElementWrapper(name = "artists")
+    @XmlElement(name = "artist")
     private List<Artist> artists;
-    @XmlTransient
+    @XmlElementWrapper(name = "staffs")
+    @XmlElement(name = "staff")
     private List<Staff> staffs;
     public Concert(){
 

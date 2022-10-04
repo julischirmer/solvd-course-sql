@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Country")
 @XmlAccessorType(XmlAccessType.FIELD)
+
 @JsonRootName("Country")
 
 public class Country {

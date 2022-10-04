@@ -4,6 +4,7 @@ import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ConnectionPool.ConnectionPool;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ public class TicketDAO implements IDAO<Ticket>{
     private final String DELETE_BY_ID = "DELETE FROM ticket WHERE id = ?";
     private final String UPDATE_TICKET = "UPDATE ticket SET cost = ?,row_letter = ?,seat_no =?,sector =?,booking_id =?,concert_id =? WHERE id = ?";
 
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(TicketDAO.class);
 
     public TicketDAO() throws SQLException {
@@ -24,8 +24,11 @@ public class TicketDAO implements IDAO<Ticket>{
     @Override
     public void insert(Ticket object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_TICKET);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_TICKET, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
             preparedStatement.setDouble(1, object.getCost());
             preparedStatement.setString(2, object.getRowLetter());
             preparedStatement.setInt(3, object.getSeatNo());
@@ -47,8 +50,10 @@ public class TicketDAO implements IDAO<Ticket>{
     @Override
     public void update(int id, Ticket object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_TICKET);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_TICKET, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             preparedStatement.setDouble(1, object.getCost());
             preparedStatement.setString(2, object.getRowLetter());
@@ -73,8 +78,10 @@ public class TicketDAO implements IDAO<Ticket>{
     @Override
     public List<Ticket> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_TICKET);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_TICKET, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Ticket> tickets = new ArrayList<>();
@@ -110,8 +117,10 @@ public class TicketDAO implements IDAO<Ticket>{
     @Override
     public Ticket getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_TICKET_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_TICKET_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -142,10 +151,12 @@ public class TicketDAO implements IDAO<Ticket>{
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
 
         try {
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

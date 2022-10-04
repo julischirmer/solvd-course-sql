@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Artist>
+    <id>9</id>
+    <name>Pol Granch</name>
+    <country>
+        <id>5</id>
+        <description>France</description>
+    </country>
+</Artist>

@@ -5,6 +5,7 @@ import models.Country;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ConnectionPool.ConnectionPool;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,6 @@ public class CountryDAO implements IDAO<Country>{
     private final String GET_ALL_COUNTRY = "SELECT * FROM country";
     private final String DELETE_BY_ID = "DELETE FROM country WHERE id = ?";
     private final String UPDATE_COUNTRY = "UPDATE country SET country_name = ? WHERE id = ?";
-
-    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hall_concert","root","2443");
     private final Logger logger = LogManager.getLogger(CountryDAO.class);
 
     public CountryDAO() throws SQLException {
@@ -25,8 +24,10 @@ public class CountryDAO implements IDAO<Country>{
     @Override
     public void insert(Country object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_COUNTRY);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_COUNTRY, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setString(1, object.getDescription());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -43,8 +44,10 @@ public class CountryDAO implements IDAO<Country>{
     @Override
     public void update(int id, Country object) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(UPDATE_COUNTRY);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_COUNTRY, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             preparedStatement.setString(1, object.getDescription());
             preparedStatement.setInt(2, id);
@@ -64,8 +67,10 @@ public class CountryDAO implements IDAO<Country>{
     @Override
     public List<Country> getAll() throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_ALL_COUNTRY);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_ALL_COUNTRY, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet result = preparedStatement.executeQuery();
 
             ArrayList<Country> countries = new ArrayList<>();
@@ -92,8 +97,10 @@ public class CountryDAO implements IDAO<Country>{
     @Override
     public Country getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(GET_COUNTRY_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(GET_COUNTRY_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
@@ -120,8 +127,10 @@ public class CountryDAO implements IDAO<Country>{
     @Override
     public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
+        Connection connection;
         try {
-            preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            connection = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
