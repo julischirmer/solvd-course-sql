@@ -4,13 +4,13 @@ USE hall_concert;
 
 DROP TABLE IF EXISTS country;
 CREATE TABLE country(
-	id INT,
+	id INT auto_increment,
     country_name VARCHAR(30),
     PRIMARY KEY (id));
 
 DROP TABLE IF EXISTS hall;
 CREATE TABLE hall (
-	id INT,
+	id INT auto_increment,
 	name VARCHAR(20),
     address VARCHAR(45),
     capacity INT,
@@ -20,13 +20,13 @@ CREATE TABLE hall (
     
 DROP TABLE IF EXISTS payment;
 CREATE TABLE payment (
-	id INT,
+	id INT auto_increment,
     type_pay VARCHAR(30),
     PRIMARY KEY (id));
     
 DROP TABLES IF EXISTS customer;
 CREATE TABLE customer(
-	id INT,
+	id INT auto_increment,
     document_no INT,
     name VARCHAR(30),
     last_name VARCHAR(30),
@@ -37,7 +37,7 @@ CREATE TABLE customer(
 
 DROP TABLE IF EXISTS booking;
 CREATE TABLE booking(
-	id INT,
+	id INT auto_increment,
     date_book DATETIME,
     customer_id INT,
     payment_id INT,
@@ -47,13 +47,13 @@ CREATE TABLE booking(
     
 DROP TABLE IF EXISTS staff_roles;
 CREATE TABLE staff_roles(
-	id INT,
+	id INT auto_increment,
     description VARCHAR(45),
     PRIMARY KEY(id));
     
 DROP TABLE IF EXISTS staff;
 CREATE TABLE staff(
-	id INT,
+	id INT auto_increment,
     document_no INT,
     name VARCHAR(30),
     last_name VARCHAR(30),
@@ -63,7 +63,7 @@ CREATE TABLE staff(
     
 DROP TABLE IF EXISTS artist;
 CREATE TABLE artist(
-	id INT,
+	id INT auto_increment,
     name VARCHAR(30),
     country_id INT,
     PRIMARY KEY (id),
@@ -71,7 +71,7 @@ CREATE TABLE artist(
     
 DROP TABLE IF EXISTS concert;  
 CREATE TABLE concert(
-	id INT,
+	id INT auto_increment,
     date_concert DATE,
     start_time TIME,
     hall_id INT,
@@ -80,7 +80,7 @@ CREATE TABLE concert(
     
 DROP TABLE IF EXISTS ticket;
 CREATE TABLE ticket(
-	id INT,
+	id INT auto_increment,
     cost DOUBLE,
     row_letter CHAR(1),
     seat_no INT,
@@ -93,22 +93,22 @@ CREATE TABLE ticket(
 
 DROP TABLE IF EXISTS concert_staff;
 CREATE TABLE concert_staff(
+	id INT auto_increment,
 	concert_id INT,
     staff_id INT,
-    date DATE,
-    PRIMARY KEY (concert_id,staff_id),
+    PRIMARY KEY (id),
     FOREIGN KEY (concert_id) REFERENCEs concert(id) ON UPDATE CASCADE ON DELETE NO ACTION,
     FOREIGN KEY (staff_id) REFERENCES staff(id) ON UPDATE CASCADE ON DELETE NO ACTION);
 
 DROP TABLE IF EXISTS instrument;
 CREATE TABLE instrument(
-	id INT,
+	id INT auto_increment,
     instrument_name VARCHAR(40),
     PRIMARY KEY (id));
 
 DROP TABLE IF EXISTS band_member;
 CREATE TABLE band_member(
-	id INT,
+	id INT auto_increment,
     document_no INT,
     name VARCHAR(30),
     last_name VARCHAR(30),
@@ -120,11 +120,12 @@ CREATE TABLE band_member(
     
 DROP TABLE IF EXISTS concert_artist;
 CREATE TABLE concert_has_artist(
+	id INT auto_increment,
 	concert_id INT,
     artist_id INT,
     time_start TIME,
     time_end TIME,
-    PRIMARY KEY (concert_id, artist_id),
+    PRIMARY KEY (id),
     FOREIGN KEY (concert_id) REFERENCES concert(id) ON UPDATE CASCADE ON DELETE NO ACTION,
     FOREIGN KEY (artist_id) REFERENCES artist(id) ON UPDATE CASCADE ON DELETE NO ACTION);
     
