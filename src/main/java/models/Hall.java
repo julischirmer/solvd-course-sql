@@ -1,6 +1,9 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,7 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Hall")
 @XmlAccessorType(XmlAccessType.FIELD)
+
 @JsonRootName("Hall")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Hall {
     @XmlElement(name = "id")
     private int id;
@@ -45,43 +50,43 @@ public class Hall {
         this.name = name;
         this.country = country;
     }
-
+    @JsonGetter("id")
     public int getId() {
         return id;
     }
-
+    @JsonSetter("id")
     public void setId(int id) {
         this.id = id;
     }
-
+    @JsonGetter("name")
     public String getName() {
         return name;
     }
-
+    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
-
+    @JsonGetter("address")
     public String getAddress() {
         return address;
     }
-
+    @JsonSetter("address")
     public void setAddress(String address) {
         this.address = address;
     }
-
+    @JsonGetter("capacity")
     public int getCapacity() {
         return capacity;
     }
-
+    @JsonSetter("capacity")
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
+    @JsonGetter("country")
     public Country getCountry() {
         return country;
     }
-
+    @JsonSetter("country")
     public void setCountry(Country country) {
         this.country = country;
     }

@@ -1,6 +1,8 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -46,43 +48,43 @@ public class Staff {
         this.name = name;
         this.lastName = lastName;;
     }
-
+    @JsonGetter("id")
     public int getId() {
         return id;
     }
-
+    @JsonSetter("id")
     public void setId(int id) {
         this.id = id;
     }
-
+    @JsonGetter("documentNo")
     public int getDocumentNo() {
         return documentNo;
     }
-
+    @JsonSetter("documentNo")
     public void setDocumentNo(int documentNo) {
         this.documentNo = documentNo;
     }
-
+    @JsonGetter("name")
     public String getName() {
         return name;
     }
-
+    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
-
+    @JsonGetter("lastName")
     public String getLastName() {
         return lastName;
     }
-
+    @JsonSetter("lastName")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    @JsonGetter("roleStaff")
     public RoleStaff getRoleStaff() {
         return roleStaff;
     }
-
+    @JsonSetter("roleStaff")
     public void setRoleStaff(RoleStaff roleStaff) {
         this.roleStaff = roleStaff;
     }

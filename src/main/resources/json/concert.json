@@ -1,0 +1,85 @@
+{
+  "id": 1,
+  "dateConcert": "2019-01-01",
+  "startTime": "20:00:00",
+  "hall": {
+    "id": 1,
+    "name": "Hall 1",
+    "address": "Address 1",
+    "capacity": 100,
+    "country": {
+      "id": 1,
+      "description": "France"
+    }
+  },
+  "artists": [
+    {
+      "id": 1,
+      "name": "The Beatles",
+      "country": {
+        "id": 10,
+        "description": "UK"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Maroon 5",
+      "country": {
+        "id": 11,
+        "description": "USA"
+      }
+    },
+    {
+      "id": 3,
+      "name": "The Rolling Stones",
+      "country": {
+        "id": 10,
+        "description": "UK"
+      }
+    },
+    {
+      "id": 4,
+      "name": "The Police",
+      "country": {
+        "id": 10,
+        "description": "UK"
+      }
+    },
+    {
+      "id": 5,
+      "name": "The Who",
+      "country": {
+        "id": 10,
+        "description": "UK"
+      }
+    }
+  ],
+  "staffs": [
+    {
+      "id": 1,
+      "documentNo": "10101010",
+      "name": "John",
+      "lastName": "Doe",
+      "roleStaff": {
+        "id": 1,
+        "roleDescription": "Manager"
+      },
+      "id": 2,
+      "documentNo": "20202020",
+      "name": "Jane",
+      "lastName": "Doe",
+      "roleStaff": {
+        "id": 2,
+        "roleDescription": "Employee"
+      },
+      "id": 3,
+      "documentNo": "30303030",
+      "name": "Peter",
+      "lastName": "Peeters",
+      "roleStaff": {
+        "id": 3,
+        "roleDescription": "Employee2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "artist_id": 1,
+  "name": "The Beatles",
+  "country": {
+    "country_id": 7,
+    "country_name": "France"
+  },
+  "artist_id": 2,
+    "name": "The Rolling Stones",
+    "country": {
+      "country_id": 7,
+      "country_name": "UK"
+    },
+    "artist_id": 3,
+    "name": "The Who",
+    "country": {
+        "country_id": 7,
+        "country_name": "UK"
+    }
+}

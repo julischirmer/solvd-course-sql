@@ -1,0 +1,8 @@
+{
+  "role_id": 1,
+  "role_name": "Employee",
+  "role_id": 2,
+  "role_name": "Recepcionist",
+  "role_id": 3,
+  "role_name": "Musician"
+}

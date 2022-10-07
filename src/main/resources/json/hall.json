@@ -1,0 +1,25 @@
+{
+  "hall_id": 1,
+  "hall_name": "Hall 1",
+  "hall_address": "Address 1",
+  "hall_capacity": 100,
+  "country": {
+    "country_id": 7,
+    "country_name": "France"
+  },
+  "hall_id": 2,
+  "hall_name": "Hall 2",
+  "hall_address": "Address 2",
+  "hall_capacity": 200,
+  "country": {
+    "country_id": 7,
+    "country_name": "France"},
+"hall_id": 3,
+  "hall_name": "Hall 3",
+  "hall_address": "Address 3",
+  "hall_capacity": 300,
+  "country": {
+    "country_id": 7,
+    "country_name": "France"
+  }
+}

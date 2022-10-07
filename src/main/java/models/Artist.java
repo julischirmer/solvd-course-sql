@@ -6,18 +6,15 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "Artist")
 @XmlAccessorType(XmlAccessType.FIELD)
-//@XmlType(propOrder = { "id", "name", "Country" })
+
 @JsonRootName("Artist")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Artist {
     @XmlElement(name = "id")
-    @JsonProperty("id")
     private int id;
     @XmlElement(name = "name")
-    @JsonProperty("name")
     private String name;
     @XmlElement(name = "country")
-    @JsonProperty("Country")
     private Country country;
 
     public Artist(){
@@ -36,28 +33,28 @@ public class Artist {
     }
 
 
-    @JsonGetter("artistId")
+    @JsonGetter("id")
     public int getId() {
         return id;
     }
 
-    @JsonSetter("artistId")
+    @JsonSetter("id")
     public void setId(int id) {
         this.id = id;
     }
-
+    @JsonGetter("name")
     public String getName() {
         return name;
     }
-
+    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
-
+    @JsonGetter("country")
     public Country getCountry() {
         return country;
     }
-
+    @JsonSetter("country")
     public void setCountry(Country country) {
         this.country = country;
     }
