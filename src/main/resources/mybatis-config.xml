@@ -5,20 +5,29 @@
 <configuration>
     <properties resource="sqlconfig.properties"/>
         <typeAliases>
+
+            <typeAlias alias="Artist" type="models.Artist"/>
+            <typeAlias alias="BandMember" type="models.BandMember"/>
+            <typeAlias alias="Booking" type="models.Booking"/>
+            <typeAlias alias="Concert" type="models.Concert"/>
+            <typeAlias alias="Staff" type="models.Staff"/>
+            <typeAlias alias="Hall" type="models.Hall"/>
+            <typeAlias alias="Instrument" type="models.Instrument"/>
+            <typeAlias alias="Payment" type="models.Payment"/>
+            <typeAlias alias="RoleStaff" type="models.RoleStaff"/>
+            <typeAlias alias="Ticket" type="models.Ticket"/>
+            <!-- <typeAlias alias="Country" type="models.Country"/>
+            <typeAlias alias="BandMember" type="models.BandMember"/>
+            <typeAlias alias="Booking" type="models.Booking"/>
+            <typeAlias alias="Concert" type="models.Concert"/>
             <typeAlias alias="Country" type="models.Country"/>
-            <!--
-<typeAlias alias="Artist" type="models.Artist"/>
-<typeAlias alias="BandMember" type="models.BandMember"/>
-<typeAlias alias="Booking" type="models.Booking"/>
-<typeAlias alias="Concert" type="models.Concert"/>
-<typeAlias alias="Country" type="models.Country"/>
-<typeAlias alias="Customer" type="models.Customer"/>
-<typeAlias alias="Hall" type="models.Hall"/>
-<typeAlias alias="Instrument" type="models.Instrument"/>
-<typeAlias alias="Payment" type="models.Payment"/>
-<typeAlias alias="RoleStaff" type="models.RoleStaff"/>
-<typeAlias alias="Staff" type="models.Staff"/>
-<typeAlias alias="Ticket" type="models.Ticket"/> -->
+            <typeAlias alias="Customer" type="models.Customer"/>
+            <typeAlias alias="Hall" type="models.Hall"/>
+            <typeAlias alias="Instrument" type="models.Instrument"/>
+            <typeAlias alias="Payment" type="models.Payment"/>
+            <typeAlias alias="RoleStaff" type="models.RoleStaff"/>
+            <typeAlias alias="Staff" type="models.Staff"/>
+            <typeAlias alias="Ticket" type="models.Ticket"/> -->
         </typeAliases>
         <environments default="development">
             <environment id="development">
@@ -32,20 +41,31 @@
             </environment>
         </environments>
         <mappers>
-            <mapper resource="mappers/country-mapper.xml"/>
-
+            <mapper resource="mappers/artistMapper.xml"/>
+            <mapper resource="mappers/bandMemberMapper.xml"/>
+            <mapper resource="mappers/bookingMapper.xml"/>
+            <mapper resource="mappers/concertMapper.xml"/>
+            <mapper resource="mappers/staffMapper.xml"/>
+            <mapper resource="mappers/hallMapper.xml"/>
+            <mapper resource="mappers/instrumentMapper.xml"/>
+            <mapper resource="mappers/paymentMapper.xml"/>
+            <mapper resource="mappers/roleStaffMapper.xml"/>
+            <mapper resource="mappers/ticketMapper.xml"/>
             <!--
-                        <mapper resource="mappers/ArtistMapper.xml"/>
-                        <mapper resource="mappers/BandMemberMapper.xml"/>
-                        <mapper resource="mappers/BookingMapper.xml"/>
-                        <mapper resource="mappers/CountryMapper.xml"/>
-                        <mapper resource="mappers/ConcertMapper.xml"/>
-                        <mapper resource="mappers/CustomerMapper.xml"/>
+            <mapper resource="mappers/countryMapper.xml"/>
+            <mapper resource="mappers/bandMemberMapper.xml"/>
 
-                        <mapper resource="mappers/InstrumentMapper.xml"/>
-                        <mapper resource="mappers/PaymentMapper.xml"/>
-                        <mapper resource="mappers/RoleStaffMapper.xml"/>
-                        <mapper resource="mappers/StaffMapper.xml"/>
-                        <mapper resource="mappers/TicketMapper.xml"/> -->
+            <mapper resource="mappers/BandMemberMapper.xml"/>
+            <mapper resource="mappers/BookingMapper.xml"/>
+            <mapper resource="mappers/CountryMapper.xml"/>
+            <mapper resource="mappers/ConcertMapper.xml"/>
+            <mapper resource="mappers/CustomerMapper.xml"/>
+            <mapper resource="mappers/HallMapper.xml"/>
+            <mapper resource="mappers/InstrumentMapper.xml"/>
+            <mapper resource="mappers/PaymentMapper.xml"/>
+            <mapper resource="mappers/RoleStaffMapper.xml"/>
+            <mapper resource="mappers/StaffMapper.xml"/>
+            <mapper resource="mappers/TicketMapper.xml"/>
+            -->
         </mappers>
 </configuration>

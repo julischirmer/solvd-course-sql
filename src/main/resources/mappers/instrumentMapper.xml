@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.IInstrumentDAO">
+    <resultMap id="InstrumentMap" type="Instrument">
+        <id property="id" column="id"/>
+        <result property="name" column="instrument_name"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="InstrumentMap">
+        SELECT *
+        FROM instrument
+        WHERE id =#{id};
+    </select>
+
+    <select id="getAll" resultMap="InstrumentMap">
+        SELECT *
+        FROM instrument;
+    </select>
+
+    <insert id="insert" parameterType="Instrument">
+        INSERT INTO instrument
+        (instrument_name)
+        VALUES (#{name})
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE instrument SET
+        instrument_name = #{object.name}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM instrument
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

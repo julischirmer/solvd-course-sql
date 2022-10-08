@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.ITicketDAO">
+    <resultMap id="TicketMap" type="Ticket">
+        <id property="id" column="id"/>
+        <result property="cost" column="cost"/>
+        <result property="rowLetter" column="row_letter"/>
+        <result property="seatNo" column="seat_no"/>
+        <result property="sector" column="sector"/>
+        <result property="booking.id" column="booking_id"/>
+        <result property="booking.dateBook" column="date_book"/>
+        <result property="booking.customer.id" column="customer_id"/>
+        <result property="booking.customer.documentNo" column="document_no"/>
+        <result property="booking.customer.name" column="name"/>
+        <result property="booking.customer.lastName" column="last_name"/>
+        <result property="booking.customer.address" column="address"/>
+        <result property="booking.customer.birthday" column="birthday"/>
+        <result property="booking.customer.email" column="email"/>
+        <result property="booking.payment.id" column="payment_id"/>
+        <result property="booking.payment.typePay" column="type_pay"/>
+        <result property="concert.id" column="concert_id"/>
+        <result property="concert.dateConcert" column="date_concert"/>
+        <result property="concert.startTime" column="start_time"/>
+        <result property="concert.hall.id" column="hall_id"/>
+        <result property="concert.hall.name" column="hall_name"/>
+        <result property="concert.hall.address" column="hall_address"/>
+        <result property="concert.hall.capacity" column="capacity"/>
+        <result property="concert.hall.country.id" column="hall_country_id"/>
+        <result property="concert.hall.country.description" column="hall_country_name"/>
+
+        <!-- <collection property="artists" ofType="Artist">
+            <id property="id" column="artist_id"/>
+            <result property="name" column="artist_name"/>
+            <result property="country.id" column="artist_country_id"/>
+            <result property="country.description" column="artist_country_name"/>
+        </collection> -->
+    </resultMap>
+
+    <select id="getById" resultMap="TicketMap">
+        SELECT *,t.id as 'ticket_id'
+        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as 'hall_country_name'
+        FROM ticket t
+        INNER JOIN booking b
+        ON b.id = t.booking_id
+        INNER JOIN customer cust
+        ON b.customer_id = cust.id
+        INNER JOIN payment p
+        ON b.payment_id = p.id
+        INNER JOIN concert c
+        ON c.id = t.concert_id
+        INNER JOIN hall h
+        ON h.id = c.hall_id
+        INNER JOIN country ch
+        ON ch.id = h.country_id
+        WHERE t.id = #{id};
+    </select>
+
+    <select id="getAll" resultMap="TicketMap">
+        SELECT *,t.id as 'ticket_id'
+        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as 'hall_country_name'
+        FROM ticket t
+        INNER JOIN booking b
+        ON b.id = t.booking_id
+        INNER JOIN customer cust
+        ON b.customer_id = cust.id
+        INNER JOIN payment p
+        ON b.payment_id = p.id
+        INNER JOIN concert c
+        ON c.id = t.concert_id
+        INNER JOIN hall h
+        ON h.id = c.hall_id
+        INNER JOIN country ch
+        ON ch.id = h.country_id
+        ORDER BY t.id;
+
+    </select>
+
+    <insert id="insert" parameterType="Ticket">
+        INSERT INTO ticket
+        (cost, row_letter, seat_no, sector, booking_id, concert_id)
+        VALUES (#{cost}, #{rowLetter}, #{seatNo}, #{sector}, #{booking.id}, #{concert.id});
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE ticket SET
+        cost = #{cost},
+        row_letter = #{rowLetter},
+        seat_no = #{seatNo},
+        sector = #{sector},
+        booking_id = #{booking.id},
+        concert_id = #{concert.id}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM ticket
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.IBandMemberDAO">
+    <resultMap id="BandMemberMap" type="BandMember">
+        <id property="id" column="id"/>
+        <result property="documentNo" column="document_no"/>
+        <result property="name" column="name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="instrument.id" column="instrument_id"/>
+        <result property="instrument.name" column="instrument_name"/>
+        <result property="artist.id" column="artist_id"/>
+        <result property="artist.name" column="artist_name"/>
+        <result property="artist.country.id" column="country_id"/>
+        <result property="artist.country.description" column="country_name"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="BandMemberMap">
+        SELECT *, a.name as 'artist_name'
+        FROM band_member bm
+        INNER JOIN instrument i
+        ON bm.instrument_id = i.id
+        INNER JOIN artist a
+        ON bm.artist_id = a.id
+        INNER JOIN country c
+        ON a.country_id = c.id
+        WHERE bm.id =#{id};
+    </select>
+
+    <select id="getAll" resultMap="BandMemberMap">
+        SELECT *, a.name as 'artist_name'
+        FROM band_member bm
+        INNER JOIN instrument i
+        ON bm.instrument_id = i.id
+        INNER JOIN artist a
+        ON bm.artist_id = a.id
+        INNER JOIN country c
+        ON a.country_id = c.id
+        ORDER BY bm.id;
+    </select>
+
+    <insert id="insert" parameterType="BandMember">
+        INSERT INTO band_member
+        (document_no, name, last_name, instrument_id, artist_id)
+        VALUES (#{documentNo}, #{name}, #{lastName}, #{instrument.id}, #{artist.id});
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE band_member SET
+        document_no = #{object.documentNo},
+        name = #{object.name},
+        last_name = #{object.lastName},
+        instrument_id = #{object.instrument.id},
+        artist_id = #{object.artist.id}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM band_member
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

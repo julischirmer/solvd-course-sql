@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.IStaffDAO">
+    <resultMap id="StaffMap" type="Staff">
+        <id property="id" column="id"/>
+        <result property="documentNo" column="document_no"/>
+        <result property="name" column="name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="roleStaff.id" column="position"/>
+        <result property="roleStaff.description" column="salary"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="StaffMap">
+        SELECT *
+        FROM staff s
+        INNER JOIN staff_roles sr
+        ON s.role_id = sr.id
+        WHERE s.id = #{id};
+    </select>
+
+    <select id="getAll" resultMap="StaffMap">
+        SELECT *
+        FROM staff s
+        INNER JOIN staff_roles sr
+        ON s.role_id = sr.id
+        ORDER BY s.id;
+    </select>
+
+    <insert id="insert" parameterType="Staff">
+        INSERT INTO staff
+        (document_no, name, last_name, role_id)
+        VALUES (#{documentNo}, #{name}, #{lastName}, #{roleStaff.id});
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE staff SET
+        document_no = #{object.documentNo},
+        name = #{object.name},
+        last_name = #{object.lastName},
+        role_id = #{object.roleStaff.id}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM staff
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

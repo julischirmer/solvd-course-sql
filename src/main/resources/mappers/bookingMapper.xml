@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.IBookingDAO">
+    <resultMap id="BookingMap" type="Booking">
+        <id property="id" column="id"/>
+        <result property="dateBook" column="date_book"/>
+        <result property="customer.id" column="customer_id"/>
+        <result property="customer.documentNo" column="document_no"/>
+        <result property="customer.name" column="name"/>
+        <result property="customer.lastName" column="last_name"/>
+        <result property="customer.address" column="address"/>
+        <result property="customer.birthday" column="birthday"/>
+        <result property="customer.email" column="email"/>
+        <result property="payment.id" column="payment_id"/>
+        <result property="payment.typePay" column="type_pay"/>
+    </resultMap>
+
+    <select id="getById" resultMap="BookingMap">
+        SELECT *
+        FROM booking b
+        INNER JOIN customer c
+        ON b.customer_id = c.id
+        INNER JOIN payment p
+        ON b.payment_id = p.id
+        WHERE b.id = #{id};
+    </select>
+
+    <select id="getAll" resultMap="BookingMap">
+        SELECT *
+        FROM booking b
+        INNER JOIN customer c
+        ON b.customer_id = c.id
+        INNER JOIN payment p
+        ON b.payment_id = p.id
+        ORDER BY b.id;
+    </select>
+
+    <insert id="insert" parameterType="Booking">
+        INSERT INTO booking
+        (date_book, customer_id, payment_id)
+        VALUES (#{dateBook}, #{customer.id}, #{payment.id});
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE booking SET
+        date_book = #{object.dateBook},
+        customer_id = #{object.customer.id},
+        payment_id = #{object.payment.id}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM booking
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

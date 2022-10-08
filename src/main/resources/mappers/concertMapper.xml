@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBatis.IConcertDAO">
+    <resultMap id="ConcertMap" type="Concert">
+        <id property="id" column="c.id"/>
+        <result property="dateConcert" column="c.date_concert"/>
+        <result property="startTime" column="c.start_time"/>
+        <result property="hall.id" column="c.hall_id"/>
+        <result property="hall.name" column="hall_name"/> <!-- h.name is the name of the hall -->
+        <result property="hall.address" column="h.address"/>
+        <result property="hall.capacity" column="h.capacity"/>
+        <result property="hall.country.id" column="country_id_hall"/>
+        <result property="hall.country.description" column="country_name_hall"/>
+
+        <collection property="artists" ofType="Artist">
+            <id property="id" column="artist_id"/>
+            <result property="name" column="artist_name"/>
+            <result property="country.id" column="country_id_artist"/>
+            <result property="country.description" column="country_name_artist"/>
+        </collection>
+
+        <collection property="staffs" ofType="Staff">
+            <id property="id" column="staff_id"/>
+            <result property="documentNo" column="s.document_no"/>
+            <result property="name" column="s.name"/>
+            <result property="lastName" column="s.last_name"/>
+            <result property="roleStaff.id" column="staff_role_id"/>
+            <result property="roleStaff.description" column="staff_role_description"/>
+        </collection>
+
+
+    </resultMap>
+
+    <select id="getById" resultMap="ConcertMap">
+        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',
+        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',
+        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',
+        s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',
+        sr.id as 'staff_role_id', sr.description 'staff_role_description'
+        FROM concert c
+        INNER JOIN hall h
+        ON c.hall_id = h.id
+        INNER JOIN country c1
+        on c1.id = h.country_id
+        RIGHT JOIN concert_has_artist cha
+        ON cha.concert_id = c.id
+        RIGHT JOIN concert_staff cs
+        ON cs.concert_id = c.id
+        INNER JOIN artist a
+        ON a.id = cha.artist_id
+        INNER JOIN country c2
+        ON c2.id = a.country_id
+        INNER JOIN staff s
+        ON s.id = cs.staff_id
+        INNER JOIN staff_roles sr
+        ON sr.id = s.role_id
+        WHERE c.id = #{id};
+    </select>
+
+    <select id="getAll" resultMap="ConcertMap">
+        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',
+        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',
+        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',
+        s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',
+        sr.id as 'staff_role_id', sr.description 'staff_role_description'
+        FROM concert c
+        INNER JOIN hall h
+        ON c.hall_id = h.id
+        INNER JOIN country c1
+        on c1.id = h.country_id
+        RIGHT JOIN concert_has_artist cha
+        ON cha.concert_id = c.id
+        RIGHT JOIN concert_staff cs
+        ON cs.concert_id = c.id
+        INNER JOIN artist a
+        ON a.id = cha.artist_id
+        INNER JOIN country c2
+        ON c2.id = a.country_id
+        INNER JOIN staff s
+        ON s.id = cs.staff_id
+        INNER JOIN staff_roles sr
+        ON sr.id = s.role_id
+        ORDER BY c.id;
+    </select>
+
+    <insert id="insert" parameterType="Concert">
+        INSERT INTO concert
+        (date_concert, start_time, hall_id)
+        VALUES (#{dateConcert}, #{startTime}, #{hall.id}));
+    </insert>
+
+    <update id="update" parameterType="map">
+        UPDATE concert SET
+        date_concert = #{object.dateConcert},
+        start_time = #{object.startTime},
+        hall_id = #{object.hall.id}
+        WHERE id = #{object.id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM concert
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
