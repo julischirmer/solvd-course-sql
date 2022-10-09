@@ -12,8 +12,8 @@ import java.util.List;
 
 public class ConcertDAO implements IDAO<Concert> {
     private final String INSERT_CONCERT = "INSERT INTO concert(date_concert,start_time,hall_id) " + "VALUES(?,?,?)";
-    private final String GET_CONCERT_BY_ID = "SELECT c.*, h.name as 'hall_name', h.address, h.capacity, h.country_id, ct.country_name, a.id as 'artist_id', a.name as 'artist_name', s.id as 'staff_id', s.document_no, s.name as 'staff_name', s.last_name as 'staff_last_name'FROM concert c INNER JOIN hall h ON c.hall_id = h.id INNER JOIN country ct ON h.country_id = ct.id RIGHT JOIN concert_has_artist ca ON c.id = ca.concert_id RIGHT JOIN concert_staff cs ON c.id = cs.concert_id RIGHT JOIN artist a ON a.id = ca.artist_id RIGHT JOIN staff s ON s.id = cs.staff_id WHERE c.id = ?";
-    private final String GET_ALL_CONCERT = "SELECT c.*, h.name as 'hall_name', h.address, h.capacity, h.country_id, ct.country_name, a.id as 'artist_id', a.name as 'artist_name', s.id as 'staff_id', s.document_no, s.name as 'staff_name', s.last_name as 'staff_last_name'FROM concert c INNER JOIN hall h ON c.hall_id = h.id INNER JOIN country ct ON h.country_id = ct.id RIGHT JOIN concert_has_artist ca ON c.id = ca.concert_id RIGHT JOIN concert_staff cs ON c.id = cs.concert_id RIGHT JOIN artist a ON a.id = ca.artist_id RIGHT JOIN staff s ON s.id = cs.staff_id WHERE c.id is not null";
+    private final String GET_CONCERT_BY_ID = "SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',a.id as 'artist_id',a.name, c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',sr.id as 'staff_role_id', sr.description 'staff_role_description' FROM concert c INNER JOIN hall h ON c.hall_id = h.id INNER JOIN country c1 on c1.id = h.country_id RIGHT JOIN concert_has_artist cha ON cha.concert_id = c.id RIGHT JOIN concert_staff cs ON cs.concert_id = c.id INNER JOIN artist a ON a.id = cha.artist_id INNER JOIN country c2 ON c2.id = a.country_id INNER JOIN staff s ON s.id = cs.staff_id INNER JOIN staff_roles sr ON sr.id = s.role_id WHERE c.id = ?";
+    private final String GET_ALL_CONCERT = "SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',a.id as 'artist_id',a.name, c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',sr.id as 'staff_role_id', sr.description 'staff_role_description' FROM concert c INNER JOIN hall h ON c.hall_id = h.id INNER JOIN country c1 on c1.id = h.country_id RIGHT JOIN concert_has_artist cha ON cha.concert_id = c.id RIGHT JOIN concert_staff cs ON cs.concert_id = c.id INNER JOIN artist a ON a.id = cha.artist_id INNER JOIN country c2 ON c2.id = a.country_id INNER JOIN staff s ON s.id = cs.staff_id INNER JOIN staff_roles sr ON sr.id = s.role_id ORDER BY c.id;";
     private final String DELETE_BY_ID = "DELETE FROM concert WHERE id = ?";
     private final String UPDATE_CONCERT = "UPDATE concert SET date_concert = ?,start_time = ?,hall_id =? WHERE flight_id = ?";
     private final Logger logger = LogManager.getLogger(ConcertDAO.class);
@@ -84,15 +84,17 @@ public class ConcertDAO implements IDAO<Concert> {
                 ArrayList<Artist> artists = new ArrayList<>();
                 ArrayList<Staff> staffs = new ArrayList<>();
 
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-                Hall hall = new Hall(result.getInt("hall_id"),result.getString("hall_name"),result.getString("address"),result.getInt("capacity"),country);
-                Artist artist = new Artist(result.getInt("artist_id"), result.getString("artist_name"));
-                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("document_no"),result.getString("staff_name"),result.getString("staff_last_name"));
+                Country country_artist = new Country(result.getInt("country_id_artist"),result.getString("country_name_artist"));
+                Country country_hall = new Country(result.getInt("country_id_hall"),result.getString("country_name_hall"));
+                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"),result.getString("staff_role_description"));
+                Hall hall = new Hall(result.getInt("c.hall_id"),result.getString("hall_name"),result.getString("h.address"),result.getInt("h.capacity"),country_hall);
+                Artist artist = new Artist(result.getInt("artist_id"), result.getString("name"), country_artist);
+                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("s.document_no"),result.getString("s.name"),result.getString("s.last_name"),roleStaff);
 
                 artists.add(artist);
                 staffs.add(staff);
 
-                Concert concert = new Concert(result.getInt("id"),result.getString("date_concert"),result.getString("start_time"),hall,artists,staffs);
+                Concert concert = new Concert(result.getInt("c.id"),result.getString("c.date_concert"),result.getString("c.start_time"),hall,artists,staffs);
                 concerts.add(concert);
 
             }
@@ -120,21 +122,24 @@ public class ConcertDAO implements IDAO<Concert> {
             preparedStatement.setInt(1, id);
 
             ResultSet result = preparedStatement.executeQuery();
-            ArrayList<Artist> artists = new ArrayList<>();
-            ArrayList<Staff> staffs = new ArrayList<>();
             Concert resultconcert = new Concert();
 
             while (result.next()) {
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-                Hall hall = new Hall(result.getInt("hall_id"),result.getString("hall_name"),result.getString("address"),result.getInt("capacity"),country);
 
-                Artist artist = new Artist(result.getInt("artist_id"), result.getString("artist_name"));
-                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("document_no"),result.getString("staff_name"),result.getString("staff_last_name"));
+                ArrayList<Artist> artists = new ArrayList<>();
+                ArrayList<Staff> staffs = new ArrayList<>();
+
+                Country country_artist = new Country(result.getInt("country_id_artist"),result.getString("country_name_artist"));
+                Country country_hall = new Country(result.getInt("country_id_hall"),result.getString("country_name_hall"));
+                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"),result.getString("staff_role_description"));
+                Hall hall = new Hall(result.getInt("c.hall_id"),result.getString("hall_name"),result.getString("h.address"),result.getInt("h.capacity"),country_hall);
+                Artist artist = new Artist(result.getInt("artist_id"), result.getString("name"), country_artist);
+                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("s.document_no"),result.getString("s.name"),result.getString("s.last_name"),roleStaff);
 
                 artists.add(artist);
                 staffs.add(staff);
-                Concert concert = new Concert(result.getInt("id"),result.getString("date_concert"),result.getString("start_time"),hall,artists,staffs);
-                resultconcert = concert;
+
+                resultconcert = new Concert(result.getInt("c.id"),result.getString("c.date_concert"),result.getString("c.start_time"),hall,artists,staffs);
             }
 
             return resultconcert;

@@ -1,4 +1,4 @@
-package xmlparsing;// Java Code to implement StAX parser
+package parsers.StAX;// Java Code to implement StAX parser
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

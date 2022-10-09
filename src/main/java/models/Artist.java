@@ -17,16 +17,16 @@ public class Artist {
     @XmlElement(name = "country")
     private Country country;
 
-    public Artist(){
+    public Artist() {
 
     }
 
-    public Artist(int id, String name){
+    public Artist(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Artist(int id, String name,Country country){
+    public Artist(int id, String name, Country country) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -42,21 +42,53 @@ public class Artist {
     public void setId(int id) {
         this.id = id;
     }
+
     @JsonGetter("name")
     public String getName() {
         return name;
     }
+
     @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
+
     @JsonGetter("country")
     public Country getCountry() {
         return country;
     }
+
     @JsonSetter("country")
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public static Builder builder() {
+        return new Artist().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder withId(int id) {
+            Artist.this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            Artist.this.name = name;
+            return this;
+        }
+
+        public Builder withCountry(Country country) {
+            Artist.this.country = country;
+            return this;
+        }
+
+        public Artist build() {
+            return Artist.this;
+        }
     }
 
     @Override
@@ -67,4 +99,5 @@ public class Artist {
                 ", country=" + country +
                 '}';
     }
+
 }

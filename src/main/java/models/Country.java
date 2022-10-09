@@ -45,6 +45,26 @@ public class Country {
         this.description = description;
     }
 
+    public static Builder builder() {
+        return new Country().new Builder();
+    }
+
+    public class Builder {
+        private Builder(){
+        }
+        public Builder withId(int id){
+            Country.this.id = id;
+            return this;
+        }
+        public Builder withDesc(String name){
+            Country.this.description = name;
+            return this;
+        }
+        public Country build(){
+            return Country.this;
+        }
+    }
+
     @Override
     public String toString() {
         return "Country{" +

@@ -1,4 +1,4 @@
-package jaxb;
+package parsers.jaxb;
 
 import dao.ConcertDAO;
 import dao.HallDAO;

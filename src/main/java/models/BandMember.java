@@ -93,6 +93,49 @@ public class BandMember {
         this.artist = artist;
     }
 
+    public static Builder builder() {
+        return new BandMember().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder withId(int id) {
+            BandMember.this.id = id;
+            return this;
+        }
+
+        public Builder withDocumentNo(int documentNo) {
+            BandMember.this.documentNo = documentNo;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            BandMember.this.name = name;
+            return this;
+        }
+
+        public Builder withLastName(String lastName) {
+            BandMember.this.lastName = lastName;
+            return this;
+        }
+
+        public Builder withInstrument(Instrument instrument) {
+            BandMember.this.instrument = instrument;
+            return this;
+        }
+
+        public Builder withArtist(Artist artist) {
+            BandMember.this.artist = artist;
+            return this;
+        }
+
+        public BandMember build() {
+            return BandMember.this;
+        }
+    }
+
     @Override
     public String toString() {
         return "BandMember{" +

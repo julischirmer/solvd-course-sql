@@ -39,6 +39,30 @@ public class Instrument {
         this.name = name;
     }
 
+    public static Builder builder() {
+        return new Instrument().new Builder();
+    }
+
+    public class Builder {
+        private Builder() {
+        }
+
+        public Builder withId(int id) {
+            Instrument.this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            Instrument.this.name = name;
+            return this;
+        }
+
+        public Instrument build() {
+            return Instrument.this;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "Instrument{" +
