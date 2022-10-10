@@ -14,10 +14,9 @@ import java.util.List;
 
 public class ArtistMysqlService implements IService<Artist> {
     ArtistDAO artistDAO = new ArtistDAO();
-    final Logger logger = LogManager.getLogger(ArtistMysqlService.class);
+
     public ArtistMysqlService() throws SQLException {
     }
-
 
     @Override
     public void insert(Artist object) throws SQLException {
@@ -27,6 +26,11 @@ public class ArtistMysqlService implements IService<Artist> {
     @Override
     public void update(int id, Artist object) throws SQLException {
         artistDAO.update(id,object);
+    }
+
+    @Override
+    public void update(Artist object) throws SQLException {
+
     }
 
     @Override

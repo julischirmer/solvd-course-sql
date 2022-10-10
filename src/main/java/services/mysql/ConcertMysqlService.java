@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ConcertMysqlService implements IService<Concert> {
     ConcertDAO concertDAO = new ConcertDAO();
-    private static final Logger logger = LogManager.getLogger(ConcertMysqlService.class);
 
     public ConcertMysqlService() throws SQLException {
     }
@@ -25,6 +24,11 @@ public class ConcertMysqlService implements IService<Concert> {
     @Override
     public void update(int id, Concert object) throws SQLException {
         concertDAO.update(id,object);
+    }
+
+    @Override
+    public void update(Concert object) throws SQLException {
+
     }
 
     @Override

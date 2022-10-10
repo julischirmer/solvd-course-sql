@@ -15,28 +15,12 @@
     </hall>
     <artists>
         <artist>
-            <id>2</id>
-            <name>Rosalia</name>
-        </artist>
-        <artist>
-            <id>1</id>
-            <name>Dua Lipa</name>
-        </artist>
-        <artist>
             <id>3</id>
             <name>Sia</name>
-        </artist>
-        <artist>
-            <id>2</id>
-            <name>Rosalia</name>
-        </artist>
-        <artist>
-            <id>1</id>
-            <name>Dua Lipa</name>
-        </artist>
-        <artist>
-            <id>3</id>
-            <name>Sia</name>
+            <country>
+                <id>2</id>
+                <description>USA</description>
+            </country>
         </artist>
     </artists>
     <staffs>
@@ -45,36 +29,10 @@
             <documentNo>22222222</documentNo>
             <name>Nahuel</name>
             <lastName>Perez</lastName>
-        </staff>
-        <staff>
-            <id>1</id>
-            <documentNo>22222222</documentNo>
-            <name>Nahuel</name>
-            <lastName>Perez</lastName>
-        </staff>
-        <staff>
-            <id>1</id>
-            <documentNo>22222222</documentNo>
-            <name>Nahuel</name>
-            <lastName>Perez</lastName>
-        </staff>
-        <staff>
-            <id>2</id>
-            <documentNo>44444444</documentNo>
-            <name>Damian</name>
-            <lastName>Salut</lastName>
-        </staff>
-        <staff>
-            <id>2</id>
-            <documentNo>44444444</documentNo>
-            <name>Damian</name>
-            <lastName>Salut</lastName>
-        </staff>
-        <staff>
-            <id>2</id>
-            <documentNo>44444444</documentNo>
-            <name>Damian</name>
-            <lastName>Salut</lastName>
+            <roleStaff>
+                <id>1</id>
+                <roleDescription>receptionist</roleDescription>
+            </roleStaff>
         </staff>
     </staffs>
 </Concert>
