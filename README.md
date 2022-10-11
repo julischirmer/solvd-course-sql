@@ -1,6 +1,7 @@
 # solvd-course-sql
 
 Description of DB Entities:
+
 - **Country**: This table store information of countries.
 - **Artist**: This table store information of artists.
 - **Staff**: This table store information of the staff members for a concert.

@@ -23,7 +23,7 @@ public interface Vehicle {
     }
 
     public class VehicleFactory {
-        public static Vehicle create (String vehicleType) {
+        public static Vehicle create(String vehicleType) {
             switch (vehicleType) {
                 case "car":
                     return new Car();

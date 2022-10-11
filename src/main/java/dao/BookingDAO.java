@@ -1,16 +1,20 @@
 package dao;
 
-import models.*;
+import ConnectionPool.ConnectionPool;
+import models.Booking;
+import models.Customer;
+import models.Payment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ConnectionPool.ConnectionPool;
 
-import java.awt.print.Book;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingDAO implements IDAO<Booking>{
+public class BookingDAO implements IDAO<Booking> {
     private final String INSERT_BOOKING = "INSERT INTO booking(date_book,customer_id,payment_id) VALUES(?,?,?)";
     private final String GET_BOOKING_BY_ID = "SELECT b.id, b.date_book, c.id as 'customer_id', c.document_no, c.name, c.last_name, c.address, c.birthday, c.email ,p.id as 'payment_id',p.type_pay FROM booking b INNER JOIN customer c ON b.customer_id = c.id INNER JOIN payment P ON b.payment_id = p.id WHERE b.id = ?";
     private final String GET_ALL_BOOKING = "SELECT b.*, c.*, p.id as 'payment_id',p.type_pay FROM booking b INNER JOIN customer c ON b.customer_id = c.id INNER JOIN payment P ON b.payment_id = p.id ORDER BY b.id;";
@@ -84,8 +88,8 @@ public class BookingDAO implements IDAO<Booking>{
                 Payment payment = new Payment(result.getInt("payment_id"), result.getString("type_pay"));
                 Customer customer =
                         new Customer(result.getInt("customer_id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"),
-                                result.getString("address"), result.getString("birthday"),result.getString("email"));
-                Booking booking = new Booking(result.getInt("id"),result.getString("date_book"),customer,payment);
+                                result.getString("address"), result.getString("birthday"), result.getString("email"));
+                Booking booking = new Booking(result.getInt("id"), result.getString("date_book"), customer, payment);
 
                 bookings.add(booking);
             }
@@ -117,11 +121,11 @@ public class BookingDAO implements IDAO<Booking>{
             result.next();
             Customer customer =
                     new Customer(result.getInt("customer_id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"),
-                            result.getString("address"), result.getString("birthday"),result.getString("email"));
+                            result.getString("address"), result.getString("birthday"), result.getString("email"));
             Payment payment = new Payment();
             payment.setId(result.getInt("id"));
             payment.setTypePay(result.getString("type_pay"));
-            Booking booking = new Booking(result.getString("date_book"),customer,payment);
+            Booking booking = new Booking(result.getString("date_book"), customer, payment);
 
             return booking;
         } catch (SQLException e) {

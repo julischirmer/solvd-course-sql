@@ -13,8 +13,9 @@
   "capacity": 200,
   "country": {
     "id": 7,
-    "description": "France"},
-"id": 3,
+    "description": "France"
+  },
+  "id": 3,
   "name": "Hall 3",
   "address": "Address 3",
   "capacity": 300,

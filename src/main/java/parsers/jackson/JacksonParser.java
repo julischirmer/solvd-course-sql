@@ -2,7 +2,6 @@ package parsers.jackson;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,9 +15,9 @@ public class JacksonParser {
     public static void main(String[] args) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Country country = new Country(10,"Peru");
+        Country country = new Country(10, "Peru");
 
-        Artist artist = new Artist(9,"Yma Sumac",country);
+        Artist artist = new Artist(9, "Yma Sumac", country);
 
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/resources/json/artistTest.json"), artist);
 

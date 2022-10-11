@@ -1,8 +1,14 @@
 package models;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Artist")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -32,6 +38,9 @@ public class Artist {
         this.country = country;
     }
 
+    public static Builder builder() {
+        return new Artist().new Builder();
+    }
 
     @JsonGetter("id")
     public int getId() {
@@ -63,8 +72,13 @@ public class Artist {
         this.country = country;
     }
 
-    public static Builder builder() {
-        return new Artist().new Builder();
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country=" + country +
+                '}';
     }
 
     public class Builder {
@@ -89,15 +103,6 @@ public class Artist {
         public Artist build() {
             return Artist.this;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Artist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country=" + country +
-                '}';
     }
 
 }

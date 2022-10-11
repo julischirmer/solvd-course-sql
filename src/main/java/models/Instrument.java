@@ -15,12 +15,18 @@ public class Instrument {
     private int id;
     @XmlElement(name = "name")
     private String name;
-    public Instrument(){
+
+    public Instrument() {
 
     }
-    public Instrument(int id, String name){
+
+    public Instrument(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static Builder builder() {
+        return new Instrument().new Builder();
     }
 
     public int getId() {
@@ -39,8 +45,12 @@ public class Instrument {
         this.name = name;
     }
 
-    public static Builder builder() {
-        return new Instrument().new Builder();
+    @Override
+    public String toString() {
+        return "Instrument{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public class Builder {
@@ -61,13 +71,5 @@ public class Instrument {
             return Instrument.this;
         }
 
-    }
-
-    @Override
-    public String toString() {
-        return "Instrument{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

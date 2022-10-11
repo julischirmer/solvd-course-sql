@@ -4,40 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="sqlconfig.properties"/>
-        <typeAliases>
+    <typeAliases>
 
-            <typeAlias alias="Artist" type="models.Artist"/>
-            <typeAlias alias="BandMember" type="models.BandMember"/>
-            <typeAlias alias="Booking" type="models.Booking"/>
-            <typeAlias alias="Concert" type="models.Concert"/>
-            <typeAlias alias="Staff" type="models.Staff"/>
-            <typeAlias alias="Hall" type="models.Hall"/>
-            <typeAlias alias="Instrument" type="models.Instrument"/>
-            <typeAlias alias="Payment" type="models.Payment"/>
-            <typeAlias alias="RoleStaff" type="models.RoleStaff"/>
-            <typeAlias alias="Ticket" type="models.Ticket"/>
-        </typeAliases>
-        <environments default="development">
-            <environment id="development">
-                <transactionManager type="JDBC"/>
-                <dataSource type="POOLED">
-                    <property name="driver" value="${driver}"/>
-                    <property name="url" value="${url}"/>
-                    <property name="username" value="${user}"/>
-                    <property name="password" value="${pass}"/>
-                </dataSource>
-            </environment>
-        </environments>
-        <mappers>
-            <mapper resource="mappers/artistMapper.xml"/>
-            <mapper resource="mappers/bandMemberMapper.xml"/>
-            <mapper resource="mappers/bookingMapper.xml"/>
-            <mapper resource="mappers/concertMapper.xml"/>
-            <mapper resource="mappers/staffMapper.xml"/>
-            <mapper resource="mappers/hallMapper.xml"/>
-            <mapper resource="mappers/instrumentMapper.xml"/>
-            <mapper resource="mappers/paymentMapper.xml"/>
-            <mapper resource="mappers/roleStaffMapper.xml"/>
-            <mapper resource="mappers/ticketMapper.xml"/>
-        </mappers>
+        <typeAlias alias="Artist" type="models.Artist"/>
+        <typeAlias alias="BandMember" type="models.BandMember"/>
+        <typeAlias alias="Booking" type="models.Booking"/>
+        <typeAlias alias="Concert" type="models.Concert"/>
+        <typeAlias alias="Staff" type="models.Staff"/>
+        <typeAlias alias="Hall" type="models.Hall"/>
+        <typeAlias alias="Instrument" type="models.Instrument"/>
+        <typeAlias alias="Payment" type="models.Payment"/>
+        <typeAlias alias="RoleStaff" type="models.RoleStaff"/>
+        <typeAlias alias="Ticket" type="models.Ticket"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${user}"/>
+                <property name="password" value="${pass}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/artistMapper.xml"/>
+        <mapper resource="mappers/bandMemberMapper.xml"/>
+        <mapper resource="mappers/bookingMapper.xml"/>
+        <mapper resource="mappers/concertMapper.xml"/>
+        <mapper resource="mappers/staffMapper.xml"/>
+        <mapper resource="mappers/hallMapper.xml"/>
+        <mapper resource="mappers/instrumentMapper.xml"/>
+        <mapper resource="mappers/paymentMapper.xml"/>
+        <mapper resource="mappers/roleStaffMapper.xml"/>
+        <mapper resource="mappers/ticketMapper.xml"/>
+    </mappers>
 </configuration>

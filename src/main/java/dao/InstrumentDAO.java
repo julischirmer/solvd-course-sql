@@ -1,13 +1,14 @@
 package dao;
 
-import models.Concert;
-import models.Country;
+import ConnectionPool.ConnectionPool;
 import models.Instrument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class InstrumentDAO implements IDAO<Instrument> {
     @Override
     public Instrument getById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
-        Connection connection ;
+        Connection connection;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             preparedStatement = connection.prepareStatement(GET_INSTRUMENT_BY_ID, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

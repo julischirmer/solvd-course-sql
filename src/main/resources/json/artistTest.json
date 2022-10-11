@@ -1,8 +1,8 @@
 {
-  "id" : 9,
-  "name" : "Yma Sumac",
-  "country" : {
-    "id" : 10,
-    "description" : "Peru"
+  "id": 9,
+  "name": "Yma Sumac",
+  "country": {
+    "id": 10,
+    "description": "Peru"
   }
 }

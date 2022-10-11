@@ -6,15 +6,15 @@
     "description": "France"
   },
   "id": 2,
-    "name": "The Rolling Stones",
-    "country": {
-      "id": 7,
-      "description": "UK"
-    },
-    "id": 3,
-    "name": "The Who",
-    "country": {
-        "id": 7,
-        "description": "UK"
-    }
+  "name": "The Rolling Stones",
+  "country": {
+    "id": 7,
+    "description": "UK"
+  },
+  "id": 3,
+  "name": "The Who",
+  "country": {
+    "id": 7,
+    "description": "UK"
+  }
 }

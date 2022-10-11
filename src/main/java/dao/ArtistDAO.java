@@ -6,7 +6,10 @@ import models.Country;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ArtistDAO implements IDAO<Artist> {
@@ -41,7 +44,6 @@ public class ArtistDAO implements IDAO<Artist> {
             }
         }
     }
-
 
 
     @Override
@@ -80,7 +82,7 @@ public class ArtistDAO implements IDAO<Artist> {
 
             while (result.next()) {
 
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
+                Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
                 Artist artist = new Artist(result.getInt("id"), result.getString("name"), country);
 
                 artists.add(artist);
@@ -112,7 +114,7 @@ public class ArtistDAO implements IDAO<Artist> {
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
-            Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
+            Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
             Artist artist = new Artist(result.getInt("id"), result.getString("name"), country);
 
             return artist;

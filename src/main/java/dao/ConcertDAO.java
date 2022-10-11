@@ -1,12 +1,14 @@
 package dao;
 
+import ConnectionPool.ConnectionPool;
 import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class ConcertDAO implements IDAO<Concert> {
     private final String DELETE_BY_ID = "DELETE FROM concert WHERE id = ?";
     private final String UPDATE_CONCERT = "UPDATE concert SET date_concert = ?,start_time = ?,hall_id =? WHERE flight_id = ?";
     private final Logger logger = LogManager.getLogger(ConcertDAO.class);
+
     // SELECT c.*, h.name as 'hall_name', h.address, h.capacity, h.country_id, ct.country_name FROM concert c INNER JOIN hall h ON h.id = c.hall_id INNER JOIN country ct ON ct.id = h.country_id WHERE c.id = ?
     public ConcertDAO() throws SQLException {
     }
@@ -84,17 +87,17 @@ public class ConcertDAO implements IDAO<Concert> {
                 ArrayList<Artist> artists = new ArrayList<>();
                 ArrayList<Staff> staffs = new ArrayList<>();
 
-                Country country_artist = new Country(result.getInt("country_id_artist"),result.getString("country_name_artist"));
-                Country country_hall = new Country(result.getInt("country_id_hall"),result.getString("country_name_hall"));
-                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"),result.getString("staff_role_description"));
-                Hall hall = new Hall(result.getInt("c.hall_id"),result.getString("hall_name"),result.getString("h.address"),result.getInt("h.capacity"),country_hall);
+                Country country_artist = new Country(result.getInt("country_id_artist"), result.getString("country_name_artist"));
+                Country country_hall = new Country(result.getInt("country_id_hall"), result.getString("country_name_hall"));
+                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"), result.getString("staff_role_description"));
+                Hall hall = new Hall(result.getInt("c.hall_id"), result.getString("hall_name"), result.getString("h.address"), result.getInt("h.capacity"), country_hall);
                 Artist artist = new Artist(result.getInt("artist_id"), result.getString("name"), country_artist);
-                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("s.document_no"),result.getString("s.name"),result.getString("s.last_name"),roleStaff);
+                Staff staff = new Staff(result.getInt("staff_id"), result.getInt("s.document_no"), result.getString("s.name"), result.getString("s.last_name"), roleStaff);
 
                 artists.add(artist);
                 staffs.add(staff);
 
-                Concert concert = new Concert(result.getInt("c.id"),result.getString("c.date_concert"),result.getString("c.start_time"),hall,artists,staffs);
+                Concert concert = new Concert(result.getInt("c.id"), result.getString("c.date_concert"), result.getString("c.start_time"), hall, artists, staffs);
                 concerts.add(concert);
 
             }
@@ -129,17 +132,17 @@ public class ConcertDAO implements IDAO<Concert> {
                 ArrayList<Artist> artists = new ArrayList<>();
                 ArrayList<Staff> staffs = new ArrayList<>();
 
-                Country country_artist = new Country(result.getInt("country_id_artist"),result.getString("country_name_artist"));
-                Country country_hall = new Country(result.getInt("country_id_hall"),result.getString("country_name_hall"));
-                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"),result.getString("staff_role_description"));
-                Hall hall = new Hall(result.getInt("c.hall_id"),result.getString("hall_name"),result.getString("h.address"),result.getInt("h.capacity"),country_hall);
+                Country country_artist = new Country(result.getInt("country_id_artist"), result.getString("country_name_artist"));
+                Country country_hall = new Country(result.getInt("country_id_hall"), result.getString("country_name_hall"));
+                RoleStaff roleStaff = new RoleStaff(result.getInt("staff_role_id"), result.getString("staff_role_description"));
+                Hall hall = new Hall(result.getInt("c.hall_id"), result.getString("hall_name"), result.getString("h.address"), result.getInt("h.capacity"), country_hall);
                 Artist artist = new Artist(result.getInt("artist_id"), result.getString("name"), country_artist);
-                Staff staff = new Staff(result.getInt("staff_id"),result.getInt("s.document_no"),result.getString("s.name"),result.getString("s.last_name"),roleStaff);
+                Staff staff = new Staff(result.getInt("staff_id"), result.getInt("s.document_no"), result.getString("s.name"), result.getString("s.last_name"), roleStaff);
 
                 artists.add(artist);
                 staffs.add(staff);
 
-                resultconcert = new Concert(result.getInt("c.id"),result.getString("c.date_concert"),result.getString("c.start_time"),hall,artists,staffs);
+                resultconcert = new Concert(result.getInt("c.id"), result.getString("c.date_concert"), result.getString("c.start_time"), hall, artists, staffs);
             }
 
             return resultconcert;

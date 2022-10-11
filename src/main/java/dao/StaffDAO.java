@@ -1,15 +1,19 @@
 package dao;
 
-import models.*;
+import ConnectionPool.ConnectionPool;
+import models.RoleStaff;
+import models.Staff;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDAO implements IDAO<Staff>{
+public class StaffDAO implements IDAO<Staff> {
     private final String INSERT_STAFF = "INSERT INTO staff(document_no,name,last_name,role_id) VALUES(?,?,?,?)";
     private final String GET_STAFF_BY_ID = "SELECT s.*, sr.description FROM staff s INNER JOIN staff_roles sr ON s.role_id = sr.id WHERE s.id = ?";
     private final String GET_ALL_STAFF = "SELECT s.*, sr.description FROM staff s INNER JOIN staff_roles sr ON s.role_id = sr.id ORDER BY s.id";
@@ -83,8 +87,8 @@ public class StaffDAO implements IDAO<Staff>{
 
             while (result.next()) {
 
-                RoleStaff roleStaff = new RoleStaff(result.getInt("role_id"),result.getString("description"));
-                Staff staff = new Staff(result.getInt("id"),result.getInt("document_no") ,result.getString("name"),result.getString("last_name"), roleStaff);
+                RoleStaff roleStaff = new RoleStaff(result.getInt("role_id"), result.getString("description"));
+                Staff staff = new Staff(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"), roleStaff);
 
                 staffs.add(staff);
             }
@@ -115,8 +119,8 @@ public class StaffDAO implements IDAO<Staff>{
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
-            RoleStaff roleStaff = new RoleStaff(result.getInt("role_id"),result.getString("description"));
-            Staff staff = new Staff(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"),roleStaff);
+            RoleStaff roleStaff = new RoleStaff(result.getInt("role_id"), result.getString("description"));
+            Staff staff = new Staff(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"), roleStaff);
 
             return staff;
         } catch (SQLException e) {

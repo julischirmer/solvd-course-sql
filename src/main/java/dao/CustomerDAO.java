@@ -1,17 +1,18 @@
 package dao;
 
-import models.Concert;
+import ConnectionPool.ConnectionPool;
 import models.Customer;
-import models.RoleStaff;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO implements IDAO<Customer>{
+public class CustomerDAO implements IDAO<Customer> {
     private final String INSERT_CUSTOMER =
             "INSERT INTO customer(document_no, name, last_name, address, birthday,email) VALUES(?,?,?,?,?,?)";
     private final String GET_CUSTOMER_BY_ID = "SELECT * FROM customer WHERE id = ?";
@@ -90,7 +91,7 @@ public class CustomerDAO implements IDAO<Customer>{
             while (result.next()) {
                 Customer customer =
                         new Customer(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"),
-                                result.getString("address"), result.getString("birthday"),result.getString("email"));
+                                result.getString("address"), result.getString("birthday"), result.getString("email"));
                 customers.add(customer);
 
             }

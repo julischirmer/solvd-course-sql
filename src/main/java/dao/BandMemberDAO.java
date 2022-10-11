@@ -1,15 +1,21 @@
 package dao;
 
 import ConnectionPool.ConnectionPool;
-import models.*;
+import models.Artist;
+import models.BandMember;
+import models.Country;
+import models.Instrument;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BandMemberDAO implements IDAO<BandMember>{
+public class BandMemberDAO implements IDAO<BandMember> {
     private final String INSERT_BAND_MEMBER = "INSERT INTO hall(document_no,name,last_name,instrument_id,artist_id) VALUES(?,?,?,?,?)";
     private final String GET_BAND_MEMBER_BY_ID = "SELECT bm.*, i.instrument_name, a.name as 'artist_name', a.country_id,c.country_name FROM band_member bm INNER JOIN instrument i ON bm.instrument_id = i.id INNER JOIN artist a ON bm.artist_id = a.id INNER JOIN country c ON c.id = a.country_id WHERE bm.id = ?";
     private final String GET_ALL_BAND_MEMBER = "SELECT bm.*, i.instrument_name, a.name as 'artist_name', a.country_id,c.country_name FROM band_member bm INNER JOIN instrument i ON bm.instrument_id = i.id INNER JOIN artist a ON bm.artist_id = a.id INNER JOIN country c ON c.id = a.country_id ORDER BY bm.id";
@@ -84,10 +90,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
 
             while (result.next()) {
 
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
+                Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
                 Artist artist = new Artist(result.getInt("artist_id"), result.getString("artist_name"), country);
                 Instrument instrument = new Instrument(result.getInt("instrument_id"), result.getString("instrument_name"));
-                BandMember bandMember = new BandMember(result.getInt("id"),result.getInt("document_no"),result.getString("name"),result.getString("last_name"),instrument,artist);
+                BandMember bandMember = new BandMember(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"), instrument, artist);
 
                 bandMembers.add(bandMember);
             }
@@ -116,10 +122,10 @@ public class BandMemberDAO implements IDAO<BandMember>{
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
-            Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
+            Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
             Artist artist = new Artist(result.getInt("artist_id"), result.getString("artist_name"), country);
             Instrument instrument = new Instrument(result.getInt("instrument_id"), result.getString("instrument_name"));
-            BandMember bandMember = new BandMember(result.getInt("id"),result.getInt("document_no"),result.getString("name"),result.getString("last_name"),instrument,artist);
+            BandMember bandMember = new BandMember(result.getInt("id"), result.getInt("document_no"), result.getString("name"), result.getString("last_name"), instrument, artist);
 
             return bandMember;
         } catch (SQLException e) {

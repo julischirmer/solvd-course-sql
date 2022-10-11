@@ -16,11 +16,11 @@ public class Payment {
     @XmlElement(name = "typePay")
     private String typePay;
 
-    public Payment(){
+    public Payment() {
 
     }
 
-    public Payment(int id, String typePay){
+    public Payment(int id, String typePay) {
         this.id = id;
         this.typePay = typePay;
     }

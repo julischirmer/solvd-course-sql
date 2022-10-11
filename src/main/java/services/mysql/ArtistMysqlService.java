@@ -1,11 +1,7 @@
 package services.mysql;
 
 import dao.ArtistDAO;
-import dao.CountryDAO;
 import models.Artist;
-import models.Country;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import services.IService;
 
 import java.sql.SQLException;
@@ -25,7 +21,7 @@ public class ArtistMysqlService implements IService<Artist> {
 
     @Override
     public void update(int id, Artist object) throws SQLException {
-        artistDAO.update(id,object);
+        artistDAO.update(id, object);
     }
 
     @Override

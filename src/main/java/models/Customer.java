@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 
 @XmlRootElement(name = "Customer")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,10 +26,11 @@ public class Customer {
     @XmlElement(name = "email")
     private String email;
 
-    public Customer(){
+    public Customer() {
 
     }
-    public Customer( int documentNo, String name, String lastName, String address, String birthday, String email){
+
+    public Customer(int documentNo, String name, String lastName, String address, String birthday, String email) {
         this.documentNo = documentNo;
         this.name = name;
         this.lastName = lastName;
@@ -39,7 +39,7 @@ public class Customer {
         this.email = email;
     }
 
-    public Customer(int id, int documentNo, String name, String lastName, String address, String birthday, String email){
+    public Customer(int id, int documentNo, String name, String lastName, String address, String birthday, String email) {
         this.id = id;
         this.documentNo = documentNo;
         this.name = name;
@@ -49,7 +49,7 @@ public class Customer {
         this.email = email;
     }
 
-    public Customer(int id, int documentNo, String name, String lastName){
+    public Customer(int id, int documentNo, String name, String lastName) {
         this.id = id;
         this.documentNo = documentNo;
         this.name = name;

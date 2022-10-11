@@ -40,7 +40,8 @@
 
     <select id="getById" resultMap="TicketMap">
         SELECT *,t.id as 'ticket_id'
-        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as 'hall_country_name'
+        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as
+        'hall_country_name'
         FROM ticket t
         INNER JOIN booking b
         ON b.id = t.booking_id
@@ -59,7 +60,8 @@
 
     <select id="getAll" resultMap="TicketMap">
         SELECT *,t.id as 'ticket_id'
-        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as 'hall_country_name'
+        ,h.name as 'hall_name', h.address as 'hall_address', ch.id as 'hall_country_id', ch.country_name as
+        'hall_country_name'
         FROM ticket t
         INNER JOIN booking b
         ON b.id = t.booking_id

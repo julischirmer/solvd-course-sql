@@ -27,17 +27,18 @@ public class Hall {
     @XmlElement(name = "country")
     private Country country;
 
-    public Hall(){
+    public Hall() {
 
     }
-    public Hall( String name, String address, int capacity, Country country){
+
+    public Hall(String name, String address, int capacity, Country country) {
         this.name = name;
         this.address = address;
         this.capacity = capacity;
         this.country = country;
     }
 
-    public Hall(int id, String name, String address, int capacity, Country country){
+    public Hall(int id, String name, String address, int capacity, Country country) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -45,47 +46,57 @@ public class Hall {
         this.country = country;
     }
 
-    public Hall(int id, String name, Country country){
+    public Hall(int id, String name, Country country) {
         this.id = id;
         this.name = name;
         this.country = country;
     }
+
     @JsonGetter("id")
     public int getId() {
         return id;
     }
+
     @JsonSetter("id")
     public void setId(int id) {
         this.id = id;
     }
+
     @JsonGetter("name")
     public String getName() {
         return name;
     }
+
     @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
+
     @JsonGetter("address")
     public String getAddress() {
         return address;
     }
+
     @JsonSetter("address")
     public void setAddress(String address) {
         this.address = address;
     }
+
     @JsonGetter("capacity")
     public int getCapacity() {
         return capacity;
     }
+
     @JsonSetter("capacity")
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
     @JsonGetter("country")
     public Country getCountry() {
         return country;
     }
+
     @JsonSetter("country")
     public void setCountry(Country country) {
         this.country = country;

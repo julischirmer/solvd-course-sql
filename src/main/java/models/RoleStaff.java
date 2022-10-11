@@ -21,25 +21,30 @@ public class RoleStaff {
     @XmlElement(name = "roleDescription")
     private String description;
 
-    public RoleStaff(){
+    public RoleStaff() {
 
     }
-    public RoleStaff(int id, String description){
+
+    public RoleStaff(int id, String description) {
         this.id = id;
         this.description = description;
     }
+
     @JsonGetter("id")
     public int getId() {
         return id;
     }
+
     @JsonSetter("id")
     public void setId(int id) {
         this.id = id;
     }
+
     @JsonGetter("roleDescription")
     public String getDescription() {
         return description;
     }
+
     @JsonSetter("roleDescription")
     public void setDescription(String description) {
         this.description = description;

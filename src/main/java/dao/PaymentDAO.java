@@ -1,17 +1,18 @@
 package dao;
 
-import models.Concert;
-import models.Country;
+import ConnectionPool.ConnectionPool;
 import models.Payment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentDAO implements IDAO<Payment>{
+public class PaymentDAO implements IDAO<Payment> {
     private final String INSERT_PAYMENT = "INSERT INTO payment(type_pay) VALUES(?)";
     private final String GET_PAYMENT_BY_ID = "SELECT * FROM payment WHERE id = ?";
     private final String GET_ALL_PAYMENT = "SELECT * FROM payment";

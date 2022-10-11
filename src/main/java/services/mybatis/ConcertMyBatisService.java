@@ -1,11 +1,7 @@
 package services.mybatis;
 
-import models.Artist;
 import models.Concert;
-import myBatis.IArtistDAO;
 import myBatis.IConcertDAO;
-import myBatis.ICountryDAO;
-import myBatis.IDAO;
 import org.apache.ibatis.session.SqlSession;
 import services.IService;
 import services.ServiceFactory;

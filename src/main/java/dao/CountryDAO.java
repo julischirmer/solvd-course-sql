@@ -1,16 +1,18 @@
 package dao;
 
-import models.Artist;
+import ConnectionPool.ConnectionPool;
 import models.Country;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryDAO implements IDAO<Country>{
+public class CountryDAO implements IDAO<Country> {
     private final String INSERT_COUNTRY = "INSERT INTO country(country_name) VALUES(?)";
     private final String GET_COUNTRY_BY_ID = "SELECT * FROM country WHERE id = ?";
     private final String GET_ALL_COUNTRY = "SELECT * FROM country";

@@ -1,9 +1,5 @@
 package myBatis;
 
-import dao.BandMemberDAO;
-import dao.CountryDAO;
-import dao.HallDAO;
-import dao.IDAO;
 import models.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -29,36 +25,36 @@ public class MainMyBatis {
             SqlSession session = sqlSessionFactory.openSession();
 
             IArtistDAO artistDAO = session.getMapper(IArtistDAO.class);
-            Artist artist=artistDAO.getById(1);
-            logger.info("artist: "+ artist);
-            ArrayList<Artist> artists= (ArrayList<Artist>) artistDAO.getAll();
-            logger.info("artists: "+ artists);
+            Artist artist = artistDAO.getById(1);
+            logger.info("artist: " + artist);
+            ArrayList<Artist> artists = (ArrayList<Artist>) artistDAO.getAll();
+            logger.info("artists: " + artists);
 
             Country country = new Country();
             country.setId(3);
-            Artist artist1=new Artist(9,"artist1",country);
+            Artist artist1 = new Artist(9, "artist1", country);
             //artistDAO.insert(artist1);
 
             //artistDAO.update(artist1);
             //artistDAO.deleteById(9);
 
             IBandMemberDAO bandMemberDAO = session.getMapper(IBandMemberDAO.class);
-            BandMember bandMember=bandMemberDAO.getById(1);
-            logger.info("bandMember: "+ bandMember);
+            BandMember bandMember = bandMemberDAO.getById(1);
+            logger.info("bandMember: " + bandMember);
 
-            ArrayList<BandMember> bandMembers= (ArrayList<BandMember>) bandMemberDAO.getAll();
-            logger.info("bandMembers: "+ bandMembers);
+            ArrayList<BandMember> bandMembers = (ArrayList<BandMember>) bandMemberDAO.getAll();
+            logger.info("bandMembers: " + bandMembers);
 
             Instrument instrument = new Instrument();
             instrument.setId(1);
 
-            Artist artist2=new Artist();
+            Artist artist2 = new Artist();
             artist2.setId(1);
-            BandMember bandMember1=new BandMember(10,999,"bandMember1","bandMember1",instrument,artist2);
+            BandMember bandMember1 = new BandMember(10, 999, "bandMember1", "bandMember1", instrument, artist2);
 
             IBookingDAO bookingDAO = session.getMapper(IBookingDAO.class);
-            logger.info("booking: "+ bookingDAO.getById(1));
-            logger.info("bookings: "+ bookingDAO.getAll());
+            logger.info("booking: " + bookingDAO.getById(1));
+            logger.info("bookings: " + bookingDAO.getAll());
 
             Booking booking = new Booking();
             booking.setId(4);
@@ -74,28 +70,28 @@ public class MainMyBatis {
             //bookingDAO.deleteById(4);
 
             IConcertDAO concertDAO = session.getMapper(IConcertDAO.class);
-            logger.info("concert: "+ concertDAO.getById(1));
-            logger.info("concerts: "+ concertDAO.getAll());
+            logger.info("concert: " + concertDAO.getById(1));
+            logger.info("concerts: " + concertDAO.getAll());
 
             IHallDAO hallDAO = session.getMapper(IHallDAO.class);
-            logger.info("hall: "+ hallDAO.getById(1));
-            logger.info("halls: "+ hallDAO.getAll());
+            logger.info("hall: " + hallDAO.getById(1));
+            logger.info("halls: " + hallDAO.getAll());
 
             IInstrumentDAO instrumentDAO = session.getMapper(IInstrumentDAO.class);
-            logger.info("instrument: "+ instrumentDAO.getById(1));
-            logger.info("instruments: "+ instrumentDAO.getAll());
+            logger.info("instrument: " + instrumentDAO.getById(1));
+            logger.info("instruments: " + instrumentDAO.getAll());
 
             IPaymentDAO paymentDAO = session.getMapper(IPaymentDAO.class);
-            logger.info("payment: "+ paymentDAO.getById(1));
-            logger.info("payments: "+ paymentDAO.getAll());
+            logger.info("payment: " + paymentDAO.getById(1));
+            logger.info("payments: " + paymentDAO.getAll());
 
             IRoleStaffDAO roleStaffDAO = session.getMapper(IRoleStaffDAO.class);
-            logger.info("roleStaff: "+ roleStaffDAO.getById(1));
-            logger.info("roleStaffs: "+ roleStaffDAO.getAll());
+            logger.info("roleStaff: " + roleStaffDAO.getById(1));
+            logger.info("roleStaffs: " + roleStaffDAO.getAll());
 
             ITicketDAO ticketDAO = session.getMapper(ITicketDAO.class);
-            logger.info("ticket: "+ ticketDAO.getById(1));
-            logger.info("tickets: "+ ticketDAO.getAll());
+            logger.info("ticket: " + ticketDAO.getById(1));
+            logger.info("tickets: " + ticketDAO.getAll());
 
             session.commit();
 

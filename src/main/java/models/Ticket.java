@@ -2,9 +2,10 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "Ticket")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,12 +27,11 @@ public class Ticket {
     private Concert concert;
 
 
-
-    public Ticket(){
+    public Ticket() {
 
     }
 
-    public Ticket(int id, double cost, String rowLetter, int seatNo, String sector, Booking booking, Concert concert){
+    public Ticket(int id, double cost, String rowLetter, int seatNo, String sector, Booking booking, Concert concert) {
         this.id = id;
         this.cost = cost;
         this.rowLetter = rowLetter;
@@ -43,7 +43,7 @@ public class Ticket {
 
     }
 
-    public Ticket( double cost, String rowLetter, int seatNo, String sector, Booking booking, Concert concert){
+    public Ticket(double cost, String rowLetter, int seatNo, String sector, Booking booking, Concert concert) {
         this.cost = cost;
         this.rowLetter = rowLetter;
         this.seatNo = seatNo;
@@ -57,16 +57,16 @@ public class Ticket {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getSeatNo() {
         return seatNo;
     }
 
     public void setSeatNo(int seatNo) {
         this.seatNo = seatNo;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
     }
 
     public String getRowLetter() {
@@ -77,12 +77,12 @@ public class Ticket {
         this.rowLetter = rowLetter;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public double getCost() {
         return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public String getSector() {

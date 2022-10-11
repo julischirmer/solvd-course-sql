@@ -1,15 +1,19 @@
 package dao;
 
-import models.*;
+import ConnectionPool.ConnectionPool;
+import models.Country;
+import models.Hall;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ConnectionPool.ConnectionPool;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HallDAO implements IDAO<Hall>{
+public class HallDAO implements IDAO<Hall> {
     private final String INSERT_HALL = "INSERT INTO hall(name,address,capacity,country_id) VALUES(?,?,?,?)";
     private final String GET_HALL_BY_ID = "SELECT h.*, c.country_name FROM hall h INNER JOIN country c ON h.country_id = c.id WHERE h.id = ?";
     private final String GET_ALL_HALL = "SELECT h.*, c.country_name FROM hall h INNER JOIN country c ON h.country_id = c.id ORDER BY h.id";
@@ -84,8 +88,8 @@ public class HallDAO implements IDAO<Hall>{
 
             while (result.next()) {
 
-                Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-                Hall hall = new Hall(result.getInt("id"),result.getString("name") ,result.getString("address"),result.getInt("capacity"), country);
+                Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
+                Hall hall = new Hall(result.getInt("id"), result.getString("name"), result.getString("address"), result.getInt("capacity"), country);
 
                 halls.add(hall);
             }
@@ -115,8 +119,8 @@ public class HallDAO implements IDAO<Hall>{
             ResultSet result = preparedStatement.executeQuery();
 
             result.next();
-            Country country = new Country(result.getInt("country_id"),result.getString("country_name"));
-            Hall hall = new Hall(result.getInt("id"),result.getString("name") ,result.getString("address"),result.getInt("capacity"), country);
+            Country country = new Country(result.getInt("country_id"), result.getString("country_name"));
+            Hall hall = new Hall(result.getInt("id"), result.getString("name"), result.getString("address"), result.getInt("capacity"), country);
 
             return hall;
         } catch (SQLException e) {

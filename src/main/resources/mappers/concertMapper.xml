@@ -34,9 +34,12 @@
     </resultMap>
 
     <select id="getById" resultMap="ConcertMap">
-        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',
-        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',
-        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',
+        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as
+        'c.hall_id',
+        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall',
+        c1.country_name as 'country_name_hall',
+        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as
+        'country_name_artist',
         s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',
         sr.id as 'staff_role_id', sr.description 'staff_role_description'
         FROM concert c
@@ -60,9 +63,12 @@
     </select>
 
     <select id="getAll" resultMap="ConcertMap">
-        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as 'c.hall_id',
-        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall', c1.country_name as 'country_name_hall',
-        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as 'country_name_artist',
+        SELECT c.id as 'c.id', c.date_concert as 'c.date_concert', c.start_time as 'c.start_time', c.hall_id as
+        'c.hall_id',
+        h.name as 'hall_name', h.address as 'h.address', h.capacity as 'h.capacity', c1.id as 'country_id_hall',
+        c1.country_name as 'country_name_hall',
+        a.id as 'artist_id',a.name as 'artist_name', c2.id as 'country_id_artist', c2.country_name as
+        'country_name_artist',
         s.id as 'staff_id',s.document_no as 's.document_no', s.name as 's.name',s.last_name as 's.last_name',
         sr.id as 'staff_role_id', sr.description 'staff_role_description'
         FROM concert c

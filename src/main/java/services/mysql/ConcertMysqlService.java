@@ -2,8 +2,6 @@ package services.mysql;
 
 import dao.ConcertDAO;
 import models.Concert;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import services.IService;
 
 import java.sql.SQLException;
@@ -23,7 +21,7 @@ public class ConcertMysqlService implements IService<Concert> {
 
     @Override
     public void update(int id, Concert object) throws SQLException {
-        concertDAO.update(id,object);
+        concertDAO.update(id, object);
     }
 
     @Override

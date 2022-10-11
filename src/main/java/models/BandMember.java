@@ -1,7 +1,6 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import dao.BandMemberDAO;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,11 +24,11 @@ public class BandMember {
     @XmlElement(name = "artist")
     private Artist artist;
 
-    public BandMember(){
+    public BandMember() {
 
     }
 
-    public BandMember(int id, int documentNo, String name, String lastName, Instrument instrument, Artist artist){
+    public BandMember(int id, int documentNo, String name, String lastName, Instrument instrument, Artist artist) {
         this.id = id;
         this.documentNo = documentNo;
         this.name = name;
@@ -38,13 +37,18 @@ public class BandMember {
         this.artist = artist;
     }
 
-    public BandMember(int documentNo, String name, String lastName, Instrument instrument, Artist artist){
+    public BandMember(int documentNo, String name, String lastName, Instrument instrument, Artist artist) {
         this.documentNo = documentNo;
         this.name = name;
         this.lastName = lastName;
         this.instrument = instrument;
         this.artist = artist;
     }
+
+    public static Builder builder() {
+        return new BandMember().new Builder();
+    }
+
     public int getId() {
         return id;
     }
@@ -93,8 +97,16 @@ public class BandMember {
         this.artist = artist;
     }
 
-    public static Builder builder() {
-        return new BandMember().new Builder();
+    @Override
+    public String toString() {
+        return "BandMember{" +
+                "id=" + id +
+                ", documentNo=" + documentNo +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", instrument=" + instrument +
+                ", artist=" + artist +
+                '}';
     }
 
     public class Builder {
@@ -134,17 +146,5 @@ public class BandMember {
         public BandMember build() {
             return BandMember.this;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "BandMember{" +
-                "id=" + id +
-                ", documentNo=" + documentNo +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", instrument=" + instrument +
-                ", artist=" + artist +
-                '}';
     }
 }

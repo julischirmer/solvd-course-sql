@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 
 @XmlRootElement(name = "Booking")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,18 +20,18 @@ public class Booking {
     @XmlElement(name = "payment")
     private Payment payment;
 
-    public Booking(){
+    public Booking() {
 
     }
 
-    public Booking(int id, String dateBook, Customer customer, Payment payment){
+    public Booking(int id, String dateBook, Customer customer, Payment payment) {
         this.id = id;
         this.dateBook = dateBook;
         this.customer = customer;
         this.payment = payment;
     }
 
-    public Booking(String dateBook, Customer customer, Payment payment){
+    public Booking(String dateBook, Customer customer, Payment payment) {
         this.dateBook = dateBook;
         this.customer = customer;
         this.payment = payment;

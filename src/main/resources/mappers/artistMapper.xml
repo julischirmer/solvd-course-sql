@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myBatis.IArtistDAO">
-<resultMap id="ArtistMap" type="Artist">
+    <resultMap id="ArtistMap" type="Artist">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="country.id" column="country_id"/>

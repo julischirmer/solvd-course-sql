@@ -2,10 +2,7 @@ package services.mybatis;
 
 import models.Artist;
 import myBatis.IArtistDAO;
-import myBatis.IDAO;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import services.IService;
 import services.ServiceFactory;
 
